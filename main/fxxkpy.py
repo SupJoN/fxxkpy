@@ -1,4 +1,7 @@
 # coding:utf-8
+import sympy
+
+
 def Print():
     FxxkPy = '''\
 .------..------..------..------..------..------.
@@ -62,6 +65,10 @@ class _Main(object):
             finally_ += i
         return eval(finally_)
 
+    # 斐波那契数列
+    def _fibonacci_sequence(self, index: int) -> int:
+        return sympy.S ('1 / ( 5 ** 0.5 ) * ( ( ( 1 + 5 ** 0.5 ) / 2 ) ** ' + str(index) + ' - ( ( 1 - 5 ** 0.5 ) / 2 ) ** ' + str(index) + ' )')
+
 Print()
 
 
@@ -70,3 +77,4 @@ test = _main._test
 quickly = _main._quickly
 pquickly = _main._pquickly
 calculator = _main._calculator
+fibonacci_sequence = _main._fibonacci_sequence

@@ -3,4 +3,4 @@ import fxxkpy
 
 
 fxxkpy.test()
-print(fxxkpy.calculator('3^3+1'))
+print(int(fxxkpy.fibonacci_sequence(30)))
