@@ -38,5 +38,5 @@ Print()
 
 
 _main = _Main()
-test = _main.test
+test = _main._test
 quickly = _main._quickly
