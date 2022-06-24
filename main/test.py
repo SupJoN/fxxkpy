@@ -3,3 +3,4 @@ import fxxkpy
 
 
 fxxkpy.test()
+print(fxxkpy.calculator('3^3+1'))

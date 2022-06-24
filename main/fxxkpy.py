@@ -1,6 +1,6 @@
 # coding:utf-8
 def Print():
-    FxxkPy = r'''
+    FxxkPy = '''\
 .------..------..------..------..------..------.
 |F.--. ||X.--. ||X.--. ||K.--. ||P.--. ||Y.--. |
 | :(): || :/\: || :/\: || :/\: || :/\: || (\/) |
@@ -51,11 +51,22 @@ class _Main(object):
         else:
             return original
 
+    # 计算器
+    def _calculator(self, input_text: str):
+        text = list(input_text)
+        finally_ = ''
+        for i in range(len(text)):
+            if input_text[i] == '^':
+                text[i] = '**'
+        for i in text:
+            finally_ += i
+        return eval(finally_)
 
 Print()
 
 
-_main = _Main('v0.2.3-beta')
+_main = _Main('v0.2.4-beta')
 test = _main._test
 quickly = _main._quickly
 pquickly = _main._pquickly
+calculator = _main._calculator
