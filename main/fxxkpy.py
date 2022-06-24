@@ -52,7 +52,7 @@ class _Main(object):
             return original
 
     # 计算器
-    def _calculator(self, input_text: str):
+    def _calculator(self, input_text: str) -> int:
         text = list(input_text)
         finally_ = ''
         for i in range(len(text)):
