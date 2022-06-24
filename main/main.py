@@ -1,7 +1,4 @@
 # coding:utf-8
-from Python.库.sort import quickly
-
-
 def Print():
     FxxkPy = r'''
 .------..------..------..------..------..------.
