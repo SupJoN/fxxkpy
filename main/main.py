@@ -13,12 +13,12 @@ def Print():
 class _Main(object):
     def __init__(self, version):
         self.version = version
-    def test(self):
-        self.quickly([])
+    def _test(self):
+        self._quickly([])
         print(self.version + '  一切正常')
 
     # 快速排序
-    def quickly(self, data: list) -> list:
+    def _quickly(self, data: list) -> list:
         original = [] + data  # 不改变原数据
         if len(original) > 1:
             standard = original[0]
@@ -29,7 +29,7 @@ class _Main(object):
                     right.append(i)
                 else:
                     left.append(i)
-            return self.quickly(left) + [standard] + self.quickly(right)
+            return self._quickly(left) + [standard] + self._quickly(right)
         else:
             return original
 
@@ -38,5 +38,5 @@ Print()
 
 
 _main = _Main('v0.2.2')
-test = _main.test
-quickly = _main.quickly
+test = _main._test
+quickly = _main._quickly
