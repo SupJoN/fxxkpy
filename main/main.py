@@ -37,6 +37,6 @@ class _Main(object):
 Print()
 
 
-_main = _Main('v0.2.2-beta')
+_main = _Main('v0.2.2')
 test = _main.test
 quickly = _main.quickly
