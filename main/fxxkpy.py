@@ -67,14 +67,26 @@ class _Main(object):
 
     # 斐波那契数列
     def _fibonacci_sequence(self, index: int) -> int:
-        return sympy.S ('1 / ( 5 ** 0.5 ) * ( ( ( 1 + 5 ** 0.5 ) / 2 ) ** ' + str(index) + ' - ( ( 1 - 5 ** 0.5 ) / 2 ) ** ' + str(index) + ' )')
+        return int(sympy.S ('1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** ' + str(index) + ' - ((1 - 5 ** 0.5) / 2) ** ' + str(index) + ')'))
+
+    # 质数判断
+    def _prime(self, num: int) -> bool:
+        if num > 1:
+            prime = True
+            for i in range(2, int(sympy.S(str(num) + ' ** (1 / 2)') + 1)):
+                if num % i == 0:
+                    prime = False
+            return prime
+        else:
+            return False
 
 Print()
 
 
-_main = _Main('v0.2.4-beta')
+_main = _Main('v0.2.5-beta')
 test = _main._test
 quickly = _main._quickly
 pquickly = _main._pquickly
 calculator = _main._calculator
 fibonacci_sequence = _main._fibonacci_sequence
+prime = _main._prime
