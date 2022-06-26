@@ -13,6 +13,7 @@ def Print():
 '''
     print(FxxkPy)
 
+
 class _Main(object):
     # 初始化方法
     def __init__(self, version):
@@ -67,7 +68,7 @@ class _Main(object):
 
     # 斐波那契数列
     def _fibonacci_sequence(self, index: int) -> int:
-        return int(sympy.S ('1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** ' + str(index) + ' - ((1 - 5 ** 0.5) / 2) ** ' + str(index) + ')'))
+        return int(sympy.S('1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** ' + str(index) + ' - ((1 - 5 ** 0.5) / 2) ** ' + str(index) + ')'))
 
     # 质数判断
     def _prime(self, num: int) -> bool:
@@ -79,6 +80,7 @@ class _Main(object):
             return prime
         else:
             return False
+
 
 Print()
 
