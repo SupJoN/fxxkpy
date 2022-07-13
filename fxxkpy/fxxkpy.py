@@ -76,6 +76,7 @@ def prime(num: int) -> bool:
     else:
         return False
 
+
 # c++类
 class _Cpp():
     def __init__(self):
