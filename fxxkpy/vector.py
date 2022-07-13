@@ -108,6 +108,3 @@ class Vector3():
     def __str__(self) -> str:
         return f"{self.__dict__}"
         # return str((self.x, self.y, self.z))
-
-
-print(Vector3(1, 2, 3) + Vector3(1, 2, 3))
