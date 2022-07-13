@@ -77,14 +77,14 @@ def prime(num: int) -> bool:
         return False
 
 # c++类
-class _Cpp(object):
+class _Cpp():
     def __init__(self):
         self.cout = _Cout()
         self.endl = '\n'
 
 
 # cout类
-class _Cout(object):
+class _Cout():
     def __init__(self):
         pass
 
@@ -95,7 +95,7 @@ class _Cout(object):
 
 
 # c类
-class _C(object):
+class _C():
     def __init__(self):
         pass
 
@@ -104,7 +104,7 @@ class _C(object):
 
 
 # 三维坐标
-class Vector3(object):
+class Vector3():
     def __init__(self, x, y, z):
         self.x = x
         self.y = y
