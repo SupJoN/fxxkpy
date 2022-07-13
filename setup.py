@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # Note: To use the 'upload' functionality of this file, you must:
@@ -18,11 +17,11 @@ URL = 'https://github.com/John7457/fxxkpy'
 EMAIL = 'supjon@supjon.eu.org'
 AUTHOR = 'SupJoN'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    # 'requests', 'maya', 'records',
+    'sympy'
 ]
 
 # What packages are optional?
