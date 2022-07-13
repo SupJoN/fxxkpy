@@ -2,7 +2,7 @@
 import sympy
 
 
-def __Print():
+def __Print() -> None:
     FxxkPy = '''
 .------..------..------..------..------..------.
 |F.--. ||X.--. ||X.--. ||K.--. ||P.--. ||Y.--. |
@@ -77,35 +77,5 @@ def prime(num: int) -> bool:
         return False
 
 
-# c++类
-class _Cpp():
-    def __init__(self):
-        self.cout = _Cout()
-        self.endl = '\n'
-
-
-# cout类
-class _Cout():
-    def __init__(self):
-        pass
-
-    # << 方法
-    def __lshift__(self, other: str):
-        print(other, end='')
-        return self
-
-
-# c类
-class _C():
-    def __init__(self):
-        pass
-
-    def printf(self, content):
-        print(content, end='')
-
-
 __Print()
 
-
-c = _C()
-cpp = _Cpp()
