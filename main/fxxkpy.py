@@ -2,7 +2,7 @@
 import sympy
 
 
-def Print():
+def __Print():
     FxxkPy = '''\
 .------..------..------..------..------..------.
 |F.--. ||X.--. ||X.--. ||K.--. ||P.--. ||Y.--. |
@@ -222,7 +222,7 @@ class _Vector(object):
         return f"{self.__dict__}"
 
 
-Print()
+__Print()
 
 
 _main = _Main('v0.3.0-beta')
