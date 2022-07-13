@@ -20,6 +20,7 @@ class _Main(object):
         self.version = version
         self._cpp = _Cpp()
         self._c = _C()
+        self._vector = _Vector
 
     # 测试方法
     def _test(self):
@@ -98,7 +99,7 @@ class _Cout():
 
     # << 方法
     def __lshift__(self, other: str):
-        print(other, end = '')
+        print(other, end='')
         return self
 
 
@@ -108,12 +109,125 @@ class _C():
         self.printf = print
 
 
+# 三维坐标
+class _Vector:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def __add__(self, other):
+        if type(other) == self.__class__:
+            return _Vector(self.x + other.x,
+                           self.y + other.y,
+                           self.z + other.z)
+        else:
+            str_ = ''
+            other_class = list(str(other.__class__))
+            del other_class[-1]
+            for index, item in enumerate(other_class):
+                if index > 5:
+                    str_ += item
+            raise Exception(
+                "TypeError: unsupported operand type(s) for +: 'Vector' and " + str_)
+
+    def __radd__(self, other):
+        if type(other) == self.__class__:
+            return _Vector(self.x + other.x,
+                           self.y + other.y,
+                           self.z + other.z)
+        else:
+            str_ = ''
+            other_class = list(str(other.__class__))
+            del other_class[-1]
+            for index, item in enumerate(other_class):
+                if index > 5:
+                    str_ += item
+            raise Exception(
+                "TypeError: unsupported operand type(s) for +: 'Vector' and " + str_)
+
+    def __iadd__(self, other):
+        if type(other) == self.__class__:
+            return _Vector(self.x + other.x,
+                           self.y + other.y,
+                           self.z + other.z)
+        else:
+            str_ = ''
+            other_class = list(str(other.__class__))
+            del other_class[-1]
+            for index, item in enumerate(other_class):
+                if index > 5:
+                    str_ += item
+            raise Exception(
+                "TypeError: unsupported operand type(s) for +: 'Vector' and " + str_)
+
+    def __mul__(self, other):
+        if type(other) == int:
+            return _Vector(self.x * other,
+                           self.y * other,
+                           self.z * other)
+        else:
+            str_ = ''
+            other_class = list(str(other.__class__))
+            del other_class[-1]
+            for index, item in enumerate(other_class):
+                if index > 5:
+                    str_ += item
+            raise Exception(
+                "TypeError: unsupported operand type(s) for *: 'Vector' and " + str_)
+
+    def __rmul__(self, other):
+        if type(other) == int:
+            return _Vector(self.x * other,
+                           self.y * other,
+                           self.z * other)
+        else:
+            str_ = ''
+            other_class = list(str(other.__class__))
+            del other_class[-1]
+            for index, item in enumerate(other_class):
+                if index > 5:
+                    str_ += item
+            raise Exception(
+                "TypeError: unsupported operand type(s) for *: 'Vector' and " + str_)
+
+    def __imul__(self, other):
+        if type(other) == int:
+            return _Vector(self.x * other,
+                           self.y * other,
+                           self.z * other)
+        else:
+            str_ = ''
+            other_class = list(str(other.__class__))
+            del other_class[-1]
+            for index, item in enumerate(other_class):
+                if index > 5:
+                    str_ += item
+            raise Exception(
+                "TypeError: unsupported operand type(s) for *: 'Vector' and " + str_)
+
+    def __eq__(self, other):
+        if type(other) == self.__class__:
+            return self.x == other.x and self.y == other.y and self.z == other.z
+        else:
+            return False
+
+    def __ne__(self,other):
+        return not self.__eq__(other)
+
+    def __str__(self):
+        return f"{self.__dict__}"
+
+
 Print()
 
 
-_main = _Main('v0.2.6-beta')
+_main = _Main('v0.3.0-beta')
 cpp = _main._cpp
+
 c = _main._c
+
+Vector = _main._vector
 test = _main._test
 quickly = _main._quickly
 pquickly = _main._pquickly
