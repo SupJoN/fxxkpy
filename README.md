@@ -1,5 +1,6 @@
 # fxxkpy
-一个Python库
+一个反Python库
+
 
 在与setup.py同级目录下，使用python的命令:
 ```bash
