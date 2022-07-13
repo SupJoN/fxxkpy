@@ -18,6 +18,8 @@ class _Main(object):
     # 初始化方法
     def __init__(self, version):
         self.version = version
+        self._cpp = _Cpp()
+        self._c = _C()
 
     # 测试方法
     def _test(self):
@@ -82,10 +84,36 @@ class _Main(object):
             return False
 
 
+# c++类
+class _Cpp():
+    def __init__(self):
+        self.cout = _Cout()
+        self.endl = '\n'
+
+
+# cout类
+class _Cout():
+    def __init__(self):
+        pass
+
+    # << 方法
+    def __lshift__(self, other: str):
+        print(other, end = '')
+        return self
+
+
+# c类
+class _C():
+    def __init__(self):
+        self.printf = print
+
+
 Print()
 
 
-_main = _Main('v0.2.5-beta')
+_main = _Main('v0.2.6-beta')
+cpp = _main._cpp
+c = _main._c
 test = _main._test
 quickly = _main._quickly
 pquickly = _main._pquickly
