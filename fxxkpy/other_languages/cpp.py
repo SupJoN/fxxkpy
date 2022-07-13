@@ -14,4 +14,3 @@ class _Cout():
 class Cpp():
     cout = _Cout()
     endl = '\n'
-        
