@@ -86,14 +86,14 @@ class _Main(object):
 
 
 # c++类
-class _Cpp():
+class _Cpp(object):
     def __init__(self):
         self.cout = _Cout()
         self.endl = '\n'
 
 
 # cout类
-class _Cout():
+class _Cout(object):
     def __init__(self):
         pass
 
@@ -104,7 +104,7 @@ class _Cout():
 
 
 # c类
-class _C():
+class _C(object):
     def __init__(self):
         pass
     
@@ -113,7 +113,7 @@ class _C():
 
 
 # 三维坐标
-class _Vector:
+class _Vector(object):
     def __init__(self, x, y, z):
         self.x = x
         self.y = y
