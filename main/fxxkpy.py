@@ -106,7 +106,10 @@ class _Cout():
 # c类
 class _C():
     def __init__(self):
-        self.printf = print
+        pass
+    
+    def printf(self, content):
+        print(content, end = '')
 
 
 # 三维坐标
