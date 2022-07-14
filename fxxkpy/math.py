@@ -1,10 +1,11 @@
 # coding:utf-8
-import types
-import sympy
+import types as __types
+
+import sympy as __sympy
 
 
 # 快速排序
-def quickly(data: list, parameter: int or types.NoneType = None) -> list:
+def quickly(data: list, parameter: int or __types.NoneType = None) -> list:
     if parameter.__class__ == int:
         original = [] + data  # 不改变原数据
         if len(original) > 1:
@@ -49,14 +50,14 @@ def calculator(input_text: str) -> int:
 
 # 斐波那契数列
 def fibonacci_sequence(index: int) -> int:
-    return int(sympy.S('1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** ' + str(index) + ' - ((1 - 5 ** 0.5) / 2) ** ' + str(index) + ')'))
+    return int(__sympy.S('1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** ' + str(index) + ' - ((1 - 5 ** 0.5) / 2) ** ' + str(index) + ')'))
 
 
 # 质数判断
 def prime(num: int) -> bool:
     if num > 1:
         prime = True
-        for i in range(2, int(sympy.S(str(num) + ' ** (1 / 2)') + 1)):
+        for i in range(2, int(__sympy.S(str(num) + ' ** (1 / 2)') + 1)):
             if num % i == 0:
                 prime = False
         return prime
