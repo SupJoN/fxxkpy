@@ -1,10 +1,10 @@
 # coding:utf-8
-from types import NoneType
+import types
 import sympy
 
 
 # 快速排序
-def quickly(data: list, parameter: int or NoneType = None) -> list:
+def quickly(data: list, parameter: int or types.NoneType = None) -> list:
     if parameter.__class__ == int:
         original = [] + data  # 不改变原数据
         if len(original) > 1:
@@ -19,7 +19,7 @@ def quickly(data: list, parameter: int or NoneType = None) -> list:
             return quickly(left, parameter) + [standard] + quickly(right, parameter)
         else:
             return original
-    elif parameter.__class__ == NoneType:
+    elif parameter == None:
         original = [] + data  # 不改变原数据
         if len(original) > 1:
             standard = original[0]
