@@ -1,39 +1,40 @@
 # coding:utf-8
+from types import NoneType
 import sympy
 
 
 # 快速排序
-def quickly(data: list) -> list:
-    original = [] + data  # 不改变原数据
-    if len(original) > 1:
-        standard = original[0]
-        del original[0]
-        left, right = [], []
-        for i in original:
-            if i >= standard:
-                right.append(i)
-            else:
-                left.append(i)
-        return quickly(left) + [standard] + quickly(right)
-    else:
-        return original
+def quickly(data: list, parameter: int or NoneType = None) -> list:
+    if parameter.__class__ == int:
+        original = [] + data  # 不改变原数据
+        if len(original) > 1:
+            standard = original[0]
+            del original[0]
+            left, right = [], []
+            for i in original:
+                if i[parameter] >= standard[parameter]:
+                    right.append(i)
+                else:
+                    left.append(i)
+            return quickly(left, parameter) + [standard] + quickly(right, parameter)
+        else:
+            return original
+    elif parameter.__class__ == NoneType:
+        original = [] + data  # 不改变原数据
+        if len(original) > 1:
+            standard = original[0]
+            del original[0]
+            left, right = [], []
+            for i in original:
+                if i >= standard:
+                    right.append(i)
+                else:
+                    left.append(i)
+            return quickly(left) + [standard] + quickly(right)
+        else:
+            return original
 
 
-# 带参数的快速排序
-def pquickly(data: list, parameter: int) -> list:
-    original = [] + data  # 不改变原数据
-    if len(original) > 1:
-        standard = original[0]
-        del original[0]
-        left, right = [], []
-        for i in original:
-            if i[parameter] >= standard[parameter]:
-                right.append(i)
-            else:
-                left.append(i)
-        return pquickly(left) + [standard] + pquickly(right)
-    else:
-        return original
 # 计算器
 def calculator(input_text: str) -> int:
     text = list(input_text)
@@ -44,6 +45,7 @@ def calculator(input_text: str) -> int:
     for i in text:
         finally_ += i
     return eval(finally_)
+
 
 # 斐波那契数列
 def fibonacci_sequence(index: int) -> int:

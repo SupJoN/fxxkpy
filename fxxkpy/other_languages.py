@@ -24,3 +24,13 @@ class _Cout():
 class Cpp():
     cout = _Cout()
     endl = '\n'
+
+# Java类
+class _out():
+    println = print
+
+class _System():
+    out = _out()
+
+class Java():
+    System = _System

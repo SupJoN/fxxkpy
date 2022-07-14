@@ -1,5 +1,5 @@
 # coding:utf-8
-def __Print() -> None:
+def __start() -> None:
     FxxkPy = '''
 .------..------..------..------..------..------.
 |F.--. ||X.--. ||X.--. ||K.--. ||P.--. ||Y.--. |
@@ -11,4 +11,4 @@ def __Print() -> None:
     print(FxxkPy)
 
 
-__Print()
+__start()
