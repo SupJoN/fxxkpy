@@ -21,8 +21,7 @@ VERSION = '1.0.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'sympy',
-    'types'
+    'sympy'
 ]
 
 # What packages are optional?
