@@ -2,17 +2,20 @@
 import sympy as __sympy
 
 
+# 两坐标距离
+def _distance3(vector3: "Vector3", other_vector3: "Vector3"):
+    res = __sympy.S('((' + str(vector3.x) + ' - ' + str(other_vector3.x) + ') ** 2 + \
+                    (' + str(vector3.y) + ' - ' + str(other_vector3.y) + ') ** 2 + \
+                    (' + str(vector3.z) + ' - ' + str(other_vector3.z) + ') ** 2) ** 0.5')
+    if res == int(res):
+        return int(res)
+    else:
+        return float(res)
+
+
 # 坐标方法及方法类
 class vector():
-    # 两坐标距离
-    def distance3(vector3: "Vector3", other_vector3: "Vector3"):
-        res = __sympy.S('((' + str(vector3.x) + ' - ' + str(other_vector3.x) + ') ** 2 + \
-                        (' + str(vector3.y) + ' - ' + str(other_vector3.y) + ') ** 2 + \
-                        (' + str(vector3.z) + ' - ' + str(other_vector3.z) + ') ** 2) ** 0.5')
-        if res == int(res):
-            return int(res)
-        else:
-            return float(res)
+    distance3 = _distance3
 
 
 # 三维坐标
