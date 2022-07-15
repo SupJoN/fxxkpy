@@ -4,6 +4,46 @@ import types as __types
 import sympy as __sympy
 
 
+# 最大公因数
+def GCF(num1: int, num2: int, sort: bool = False):
+    # 这个太慢了
+    '''
+    if sort:
+        min_num = num1
+        max_num = num2
+    else:
+        min_num = min(num1, num2)
+        max_num = max(num1, num2)
+    if min_num == 1 or max_num - min_num == 1:
+        return 1
+    elif max_num % min_num == 0:
+        return min_num
+    else:
+        for i in range(1, min_num):
+            i = __sympy.prime(i)
+            if min_num % i == 0 and max_num % i == 0:
+                return i * GCF(min_num // i, max_num // i, sort=True)
+        return 1
+    '''
+    if sort:
+        min_num = num1
+        max_num = num2
+    else:
+        min_num = min(num1, num2)
+        max_num = max(num1, num2)
+    if min_num == 1 or max_num - min_num == 1:
+        return 1
+    elif max_num % min_num == 0:
+        return max_num
+    else:
+        return GCF(max_num % min_num, min_num, sort=True)
+
+
+# 最小公倍数
+def LCM(num1: int, num2: int, sort: bool = False):
+    return num1 * num2 // GCF(num1, num2, sort=False)
+
+
 # 快速排序
 def quickly(data: list, parameter: int or __types.NoneType = None) -> list:
     if parameter.__class__ == int:
