@@ -4,6 +4,7 @@ import types as __types
 import sympy as __sympy
 
 from .error import error as __error
+from .error import operation_error as __operation_error
 
 
 # 最大公因数
@@ -41,7 +42,7 @@ def GCF(num1: int, num2: int, sort: bool = False):
         else:
             return GCF(max_num % min_num, min_num, sort=True)
     else:
-        __error(num1, num2, 'GCF')
+        __operation_error(num1, num2, 'GCF')
 
 
 # 最小公倍数
@@ -49,7 +50,7 @@ def LCM(num1: int, num2: int, sort: bool = False):
     if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
         return num1 * num2 // GCF(num1, num2, sort=False)
     else:
-        __error(num1, num2, 'LCM')
+        __operation_error(num1, num2, 'LCM')
 
 
 # 快速排序
