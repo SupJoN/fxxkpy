@@ -3,6 +3,8 @@ import types as __types
 
 import sympy as __sympy
 
+from .error import error as __error
+
 
 # 最大公因数
 def GCF(num1: int, num2: int, sort: bool = False):
@@ -25,23 +27,29 @@ def GCF(num1: int, num2: int, sort: bool = False):
                 return i * GCF(min_num // i, max_num // i, sort=True)
         return 1
     '''
-    if sort:
-        min_num = num1
-        max_num = num2
+    if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
+        if sort:
+            min_num = num1
+            max_num = num2
+        else:
+            min_num = min(num1, num2)
+            max_num = max(num1, num2)
+        if min_num == 1 or max_num - min_num == 1:
+            return 1
+        elif max_num // min_num == max_num / min_num:
+            return min_num
+        else:
+            return GCF(max_num % min_num, min_num, sort=True)
     else:
-        min_num = min(num1, num2)
-        max_num = max(num1, num2)
-    if min_num == 1 or max_num - min_num == 1:
-        return 1
-    elif max_num % min_num == 0:
-        return max_num
-    else:
-        return GCF(max_num % min_num, min_num, sort=True)
+        __error(num1, num2, 'GCF')
 
 
 # 最小公倍数
 def LCM(num1: int, num2: int, sort: bool = False):
-    return num1 * num2 // GCF(num1, num2, sort=False)
+    if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
+        return num1 * num2 // GCF(num1, num2, sort=False)
+    else:
+        __error(num1, num2, 'LCM')
 
 
 # 快速排序
