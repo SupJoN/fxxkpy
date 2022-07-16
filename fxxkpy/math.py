@@ -48,7 +48,7 @@ def GCF(num1: int, num2: int, sort: bool = False):
 # 最小公倍数
 def LCM(num1: int, num2: int, sort: bool = False):
     if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
-        return num1 * num2 // GCF(num1, num2, sort=False)
+        return num1 * num2 // GCF(num1, num2, sort=sort)
     else:
         __operation_error(num1, num2, 'LCM')
 
