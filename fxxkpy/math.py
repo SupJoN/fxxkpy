@@ -3,7 +3,6 @@ import types as __types
 
 import sympy as __sympy
 
-from .error import error as __error
 from .error import operation_error as __operation_error
 
 
