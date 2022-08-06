@@ -9,8 +9,6 @@ python setup.py sdist bdist_wheel
 这样我们就能跟看到setup.py文件夹下面多了一个build文件夹，打开就能看到我们的生成的.whl文件了。我们可以尝试用pip安装这个包。 -->
 
 windows 请双击install.bat安装fxxkpy
-linux 请双击install.sh安装fxxkpy
+linux 和 macOS 请双击install.sh安装fxxkpy
 
-注意：
-1、pip和python按需替换成pip3和python3
-2、MacOS请复制到终端执行
+注意：pip和python按需替换成pip3和python3
