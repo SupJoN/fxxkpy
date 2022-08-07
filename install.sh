@@ -1,3 +1,3 @@
 pip uninstall fxxkpy -y
-sleep 3
-pip install dist/fxxkpy-1.0.0-py3-none-any.whl
+python setup.py install
+pip install dist\fxxkpy-2.0.0-py3-none-any.whl

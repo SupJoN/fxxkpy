@@ -3,11 +3,12 @@
 # Note: To use the 'upload' functionality of this file, you must:
 #   $ pipenv install twine --dev
 
-from setuptools import find_packages, setup, Command
-from shutil import rmtree
-import sys
-import os
 import io
+import os
+import sys
+from shutil import rmtree
+
+from setuptools import Command, find_packages, setup
 
 # Package meta-data.
 NAME = 'fxxkpy'
@@ -15,8 +16,9 @@ DESCRIPTION = '这是一个中国人写的、非常棒的反Python库。'
 URL = 'https://github.com/John7457/fxxkpy'
 EMAIL = 'supjon@supjon.eu.org'
 AUTHOR = 'SupJoN'
+MAINTAINER = 'SupJoN'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '1.0.0'
+VERSION = '2.0.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -91,6 +93,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     author=AUTHOR,
+    maintainer=MAINTAINER,
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
