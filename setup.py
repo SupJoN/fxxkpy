@@ -3,12 +3,11 @@
 # Note: To use the 'upload' functionality of this file, you must:
 #   $ pipenv install twine --dev
 
-import io
-import os
-import sys
-from shutil import rmtree
-
 from setuptools import find_packages, setup, Command
+from shutil import rmtree
+import sys
+import os
+import io
 
 # Package meta-data.
 NAME = 'fxxkpy'
@@ -85,29 +84,29 @@ class UploadCommand(Command):
 
 # Where the magic happens:
 setup(
-    name = NAME,
+    name=NAME,
     # version = about['__version__'],
-    version = VERSION,
-    description = DESCRIPTION,
-    long_description = long_description,
-    long_description_content_type = 'text/markdown',
-    author = AUTHOR,
-    author_email = EMAIL,
-    python_requires = REQUIRES_PYTHON,
-    url = URL,
-    packages = find_packages(
-        exclude = ["tests", "*.tests", "*.tests.*", "tests.*"]),
+    version=VERSION,
+    description=DESCRIPTION,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    author=AUTHOR,
+    author_email=EMAIL,
+    python_requires=REQUIRES_PYTHON,
+    url=URL,
+    packages=find_packages(
+        exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
     # If your package is a single module, use this instead of 'packages':
     # py_modules = ['mypackage'],
 
     # entry_points = {
     #     'console_scripts': ['mycli = mymodule:cli'],
     # },
-    install_requires = REQUIRED,
-    extras_require = EXTRAS,
-    include_package_data = True,
+    install_requires=REQUIRED,
+    extras_require=EXTRAS,
+    include_package_data=True,
     license='MIT',
-    classifiers = [
+    classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'License :: OSI Approved :: MIT License',
@@ -118,7 +117,7 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy'
     ],
     # $ setup.py publish support.
-    cmdclass = {
+    cmdclass={
         'upload': UploadCommand,
     },
 )
