@@ -1,4 +1,4 @@
-# coding:utf-8
+# -*- coding: UTF-8 -*-
 from .start import *
 from .math import *
 from .vector import *

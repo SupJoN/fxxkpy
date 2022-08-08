@@ -1,4 +1,4 @@
-# coding:utf-8
+# -*- coding: UTF-8 -*-
 import types as __types
 
 import sympy as __sympy
