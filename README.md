@@ -1,14 +1,30 @@
 # fxxkpy
-一个反Python库
+一个反 Python 库
 
+## 开源协议
+本代码遵守 MIT 协议开源
 
-<!-- 在与setup.py同级目录下，使用python的命令:
-```bash
-python setup.py sdist bdist_wheel
-```
-这样我们就能跟看到setup.py文件夹下面多了一个build文件夹，打开就能看到我们的生成的.whl文件了。我们可以尝试用pip安装这个包。 -->
-
-windows 请运行 install.bat 安装 fxxkpy
+## 使用方法
+### 编译
+windows 请运行 install.bat 安装 fxxkpy<br>
 linux 和 macOS 请运行 install.sh 安装 fxxkpy
 
-注意：pip和python按需替换成pip3和python3
+注意：pip 和 python 按需替换成 pip3 和 python3
+
+### pip 安装
+```
+pip install fxxkpy
+```
+
+### pip 升级
+```
+pip install fxxkpy --update
+```
+
+## 仓库地址
+1. GitHub 仓库
+    - [fxxkpy 仓库](https://github.com/John7457/fxxkpy)<br>
+    - [Wallpaper 仓库](https://github.com/John7457/wallpaper)
+    - 注: DynamicWallpaper 的具体使用请看 wallpaper.py 里的注释
+2. PyPI 仓库
+    - [fxxkpy 仓库](https://pypi.org/project/fxxkpy/)

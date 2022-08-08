@@ -18,6 +18,9 @@ class Dynamic(object):
         display_thread: 显示线程
         back_thread: 还原缩放设置线程
         main_thread: 主线程
+
+    注意:
+    程序运作是可能会改变缩放率，忽略即可，程序运行要十秒左右的时间，最好啥都不干
     '''
 
     def __init__(self, video: str, player: str = "$default", command: str = "$default"):

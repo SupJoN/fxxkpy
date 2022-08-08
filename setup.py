@@ -22,7 +22,8 @@ VERSION = '2.0.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'sympy'
+    'sympy',
+    'pywin32'
 ]
 
 # What packages are optional?
