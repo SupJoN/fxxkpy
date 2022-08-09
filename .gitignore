@@ -131,4 +131,4 @@ dmypy.json
 .pyre/
 
 # PyPI
-twine
+twine.ps1
