@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# coding:utf-8
 # 动态壁纸
 class Dynamic(object):
     '''

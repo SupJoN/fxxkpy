@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# coding:utf-8
 # c类
 class C():
     # printf方法

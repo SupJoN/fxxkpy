@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# coding:utf-8
 def error(variable1: any, variable2: any, methods: str):
     variable1_str = ''
     variable1_class = list(str(variable1.__class__))
