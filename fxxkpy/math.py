@@ -7,26 +7,7 @@ from .error import operation_error as __operation_error
 
 
 # 最大公因数
-def GCF(num1: int, num2: int, sort: bool = False):
-    # 这个太慢了
-    '''
-    if sort:
-        min_num = num1
-        max_num = num2
-    else:
-        min_num = min(num1, num2)
-        max_num = max(num1, num2)
-    if min_num == 1 or max_num - min_num == 1:
-        return 1
-    elif max_num % min_num == 0:
-        return min_num
-    else:
-        for i in range(1, min_num):
-            i = __sympy.prime(i)
-            if min_num % i == 0 and max_num % i == 0:
-                return i * GCF(min_num // i, max_num // i, sort=True)
-        return 1
-    '''
+def GCF(num1: int, num2: int, sort: bool = False) -> int:
     if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
         if sort:
             min_num = num1
@@ -45,7 +26,7 @@ def GCF(num1: int, num2: int, sort: bool = False):
 
 
 # 最小公倍数
-def LCM(num1: int, num2: int, sort: bool = False):
+def LCM(num1: int, num2: int, *, sort: bool = False) -> int:
     if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
         return num1 * num2 // GCF(num1, num2, sort=sort)
     else:
@@ -98,7 +79,7 @@ def calculator(input_text: str) -> int:
 
 # 斐波那契数列
 def fibonacci_sequence(index: int) -> int:
-    return int(__sympy.S('1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** ' + str(index) + ' - ((1 - 5 ** 0.5) / 2) ** ' + str(index) + ')'))
+    return int(__sympy.S(f"1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** {index} - ((1 - 5 ** 0.5) / 2) ** {index})"))
 
 
 # 质数判断

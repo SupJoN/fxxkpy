@@ -18,13 +18,13 @@ pip install fxxkpy
 
 ### pip 升级
 ```
-pip install fxxkpy --update
+pip install --upgrade fxxkpy
 ```
 
 ## 仓库地址
 1. GitHub 仓库
-    - [fxxkpy 仓库](https://github.com/John7457/fxxkpy)<br>
-    - [Wallpaper 仓库](https://github.com/John7457/wallpaper)
+    - [fxxkpy 仓库](https://github.com/SupJoN/fxxkpy)<br>
+    - [Wallpaper 仓库](https://github.com/SupJoN/wallpaper)
     - 注: DynamicWallpaper 的具体使用请看 wallpaper.py 里的注释
 2. PyPI 仓库
     - [fxxkpy 仓库](https://pypi.org/project/fxxkpy/)

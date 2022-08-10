@@ -3,12 +3,13 @@
 # Note: To use the 'upload' functionality of this file, you must:
 #   $ pipenv install twine --dev
 
-import io
 import os
 import sys
 from shutil import rmtree
 
 from setuptools import Command, find_packages, setup
+
+from fxxkpy.version import ver
 
 # Package meta-data.
 NAME = 'fxxkpy'
@@ -18,12 +19,13 @@ EMAIL = 'supjon@supjon.eu.org'
 AUTHOR = 'SupJoN'
 MAINTAINER = 'SupJoN'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '2.0.3'
+VERSION = ver
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'sympy',
-    'pywin32'
+    'colorama',
+    'pywin32',
+    'sympy'
 ]
 
 # What packages are optional?
@@ -36,12 +38,12 @@ EXTRAS = {
 # Except, perhaps the License and Trove Classifiers!
 # If you do change the License, remember to change the Trove Classifier for that!
 
-here = os.path.abspath(os.path.dirname(__file__))
+path = os.path.split(os.path.abspath(__file__))[0]
 
 # Import the README and use it as the long-description.
 # Note: this will only work if 'README.md' is present in your MANIFEST.in file!
 try:
-    with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+    with open(os.path.join(path, "README.md"), encoding='utf-8') as f:
         long_description = '\n' + f.read()
 except FileNotFoundError:
     long_description = DESCRIPTION

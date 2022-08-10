@@ -2,7 +2,7 @@
 # c类
 class C():
     # printf方法
-    def printf(content):
+    def printf(content) -> None:
         print(content, end='')
 
 

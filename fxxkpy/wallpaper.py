@@ -1,11 +1,16 @@
 # coding:utf-8
+from types import NoneType as _NoneType
+
+
 # 动态壁纸
 class Dynamic(object):
     '''
     Windows下的动态壁纸类
 
     只有x86架构的64位Windows可以运行，其他系统会报错
+
     self.start 方法开始显示壁纸
+
     self.stop 方法结束显示壁纸
 
     属性:
@@ -20,10 +25,10 @@ class Dynamic(object):
         main_thread: 主线程
 
     注意:
-    程序运作是可能会改变缩放率，忽略即可，程序运行要十秒左右的时间，最好啥都不干
+        程序运作是可能会改变缩放率，忽略即可，程序运行要十秒左右的时间，最好啥都不干
     '''
 
-    def __init__(self, video: str, player: str = "$default", command: str = "$default"):
+    def __init__(self, video: str, player: str = "$default", command: str = "$default") -> None:
         # 导入库
         import os as __os
         import time as __time
@@ -58,7 +63,7 @@ class Dynamic(object):
                 f"CompatibilityError: {self.__platform.system} is not compatible with {self.__platform.machine()}")
 
     # 获取真实的分辨率
-    def __get_real_resolution(self):
+    def __get_real_resolution(self) -> tuple:
         hDC = self.__win32gui.GetDC(0)
         # 横向分辨率
         w = self.__win32print.GetDeviceCaps(
@@ -69,13 +74,13 @@ class Dynamic(object):
         return w, h
 
     # 获取缩放后的分辨率
-    def __get_screen_size(self):
+    def __get_screen_size(self) -> tuple:
         w = self.__win32api.GetSystemMetrics(0)
         h = self.__win32api.GetSystemMetrics(1)
         return w, h
 
     # 获取DPI
-    def __getdpi(self):
+    def __getdpi(self) -> float:
         real_resolution = self.__get_real_resolution()
         screen_size = self.__get_screen_size()
         screen_scale_rate = round(real_resolution[0] / screen_size[0], 2)
@@ -83,7 +88,7 @@ class Dynamic(object):
         return screen_scale_rate
 
     # 缩放设置为100%
-    def __change(self):
+    def __change(self) -> bool:
         if self.userdpi == 100:
             return False
         else:
@@ -91,16 +96,16 @@ class Dynamic(object):
             return True
 
     # 缩放自动调回初始值
-    def __back(self):
+    def __back(self) -> None:
         self.__win32api.ShellExecute(
             0, 'open', self.SetDpi, str(self.userdpi), '', 1)
 
     # 播放视频
-    def __play(self):
+    def __play(self) -> None:
         self.__os.popen(f"{self.player} {self.command}")
 
     # 隐藏WorkerW
-    def __hide(self, hwnd, hwnds):
+    def __hide(self, hwnd: int, hwnds: _NoneType) -> None:
         hdef = self.__win32gui.FindWindowEx(
             hwnd, 0, "SHELLDLL_DefView", None)  # 枚举窗口寻找特定类
         if hdef != 0:
@@ -112,7 +117,7 @@ class Dynamic(object):
                 self.__time.sleep(100)  # 进入循环防止壁纸退出
 
     # 显示壁纸
-    def __display(self):
+    def __display(self) -> None:
         self.__play()
         self.__time.sleep(0.5)
         progman = self.__win32gui.FindWindow(
@@ -124,7 +129,7 @@ class Dynamic(object):
         self.__win32gui.EnumWindows(self.__hide, None)  # 枚举窗口，回调hide函数
 
     # 主函数
-    def __main(self):
+    def __main(self) -> None:
         self.__time.sleep(1)
         self.display_thread = self.__threading.Thread(
             target=self.__display, daemon=True)
@@ -138,12 +143,12 @@ class Dynamic(object):
         return
 
     # 开始函数
-    def start(self):
+    def start(self) -> None:
         self.main_thread = self.__threading.Thread(
             target=self.__main if self.__change() else self.__display)
         self.main_thread.start()
 
     # 停止函数
-    def stop(self):
+    def stop(self) -> None:
         self.stop_threads = True
         self.main_thread.join()
