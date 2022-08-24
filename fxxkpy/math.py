@@ -135,8 +135,9 @@ def quickly(data: list, parameter: any = None) -> list:
             return original
 
 
+'''
 # 计算器
-def calculator(input_text: str) -> int:
+def calculator(input_text: str) -> int | float:
     text = list(input_text)
     finally_ = ''
     for i in range(len(text)):
@@ -145,6 +146,7 @@ def calculator(input_text: str) -> int:
     for i in text:
         finally_ += i
     return eval(finally_)
+'''
 
 
 # 斐波那契数列
