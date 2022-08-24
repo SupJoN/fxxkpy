@@ -24,6 +24,7 @@ VERSION = ver
 # What packages are required for this module to be executed?
 REQUIRED = [
     'colorama',
+    'pygame',
     'pywin32',
     'sympy'
 ]
@@ -69,7 +70,7 @@ class UploadCommand(Command):
     def run(self):
         try:
             self.status('Removing previous builds…')
-            rmtree(os.path.join(here, 'dist'))
+            rmtree(os.path.join(path, 'dist'))
         except OSError:
             pass
 

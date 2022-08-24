@@ -21,13 +21,7 @@ class Cpp():
 
 
 # Java类
-class _out():
-    println = print
-
-
-class _System():
-    out = _out()
-
-
 class Java():
-    System = _System
+    class System():
+        class out():
+            println = print
