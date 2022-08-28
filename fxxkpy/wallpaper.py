@@ -27,7 +27,6 @@ class Dynamic(object):
     注意:
         程序运作是可能会改变缩放率，忽略即可，程序运行要十秒左右的时间，最好啥都不干
     '''
-
     def __init__(self, video: str, player: str = "$default", command: str = "$default") -> None:
         # 导入库
         import os as __os
@@ -50,8 +49,7 @@ class Dynamic(object):
         if self.__platform.system() == "Windows" and self.__platform.machine() == "AMD64":
             self.video = video
             self.player = player if player != "$default" else f"{self.__os.path.split(self.__os.path.abspath(__file__))[0]}\\wallpaper\\ffplay\\ffplay.exe"
-            self.command = command.replace(
-                "$video", video, 1) if command != "$default" else f"{video} -noborder -fs -loop 0 -loglevel quiet"
+            self.command = command.replace("$video", video, 1) if command != "$default" else f"{video} -noborder -fs -loop 0 -loglevel quiet"
             self.SetDpi = f"{self.__os.path.split(self.__os.path.abspath(__file__))[0]}\\wallpaper\\SetDpi.exe"
             self.userdpi = self.__getdpi()
             self.stop_threads = False
@@ -59,18 +57,15 @@ class Dynamic(object):
             self.back_thread = None
             self.main_thread = None
         else:
-            raise Exception(
-                f"CompatibilityError: {self.__platform.system} is not compatible with {self.__platform.machine()}")
+            raise Exception(f"CompatibilityError: {self.__platform.system} is not compatible with {self.__platform.machine()}")
 
     # 获取真实的分辨率
     def __get_real_resolution(self) -> tuple:
         hDC = self.__win32gui.GetDC(0)
         # 横向分辨率
-        w = self.__win32print.GetDeviceCaps(
-            hDC, self.__win32con.DESKTOPHORZRES)
+        w = self.__win32print.GetDeviceCaps(hDC, self.__win32con.DESKTOPHORZRES)
         # 纵向分辨率
-        h = self.__win32print.GetDeviceCaps(
-            hDC, self.__win32con.DESKTOPVERTRES)
+        h = self.__win32print.GetDeviceCaps(hDC, self.__win32con.DESKTOPVERTRES)
         return w, h
 
     # 获取缩放后的分辨率
@@ -97,8 +92,7 @@ class Dynamic(object):
 
     # 缩放自动调回初始值
     def __back(self) -> None:
-        self.__win32api.ShellExecute(
-            0, 'open', self.SetDpi, str(self.userdpi), '', 1)
+        self.__win32api.ShellExecute(0, 'open', self.SetDpi, str(self.userdpi), '', 1)
 
     # 播放视频
     def __play(self) -> None:
@@ -106,13 +100,10 @@ class Dynamic(object):
 
     # 隐藏WorkerW
     def __hide(self, hwnd: int, hwnds: _NoneType) -> None:
-        hdef = self.__win32gui.FindWindowEx(
-            hwnd, 0, "SHELLDLL_DefView", None)  # 枚举窗口寻找特定类
+        hdef = self.__win32gui.FindWindowEx(hwnd, 0, "SHELLDLL_DefView", None)  # 枚举窗口寻找特定类
         if hdef != 0:
-            workerw = self.__win32gui.FindWindowEx(
-                0, hwnd, "WorkerW", None)  # 找到hdef后寻找WorkerW
-            self.__win32gui.ShowWindow(
-                workerw, self.__win32con.SW_HIDE)  # 隐藏WorkerW
+            workerw = self.__win32gui.FindWindowEx(0, hwnd, "WorkerW", None)  # 找到hdef后寻找WorkerW
+            self.__win32gui.ShowWindow(workerw, self.__win32con.SW_HIDE)  # 隐藏WorkerW
             while True:
                 self.__time.sleep(100)  # 进入循环防止壁纸退出
 
@@ -120,10 +111,8 @@ class Dynamic(object):
     def __display(self) -> None:
         self.__play()
         self.__time.sleep(0.5)
-        progman = self.__win32gui.FindWindow(
-            "Progman", "Program Manager")  # 寻找Progman
-        self.__win32gui.SendMessageTimeout(
-            progman, 0x52C, 0, 0, 0, 0)  # 发送0x52C消息
+        progman = self.__win32gui.FindWindow("Progman", "Program Manager")  # 寻找Progman
+        self.__win32gui.SendMessageTimeout(progman, 0x52C, 0, 0, 0, 0)  # 发送0x52C消息
         videowin = self.__win32gui.FindWindow("SDL_app", None)  # 寻找ffplay 播放窗口
         self.__win32gui.SetParent(videowin, progman)  # 设置子窗口
         self.__win32gui.EnumWindows(self.__hide, None)  # 枚举窗口，回调hide函数
@@ -131,10 +120,8 @@ class Dynamic(object):
     # 主函数
     def __main(self) -> None:
         self.__time.sleep(1)
-        self.display_thread = self.__threading.Thread(
-            target=self.__display, daemon=True)
-        self.back_thread = self.__threading.Thread(
-            target=self.__back, daemon=True)
+        self.display_thread = self.__threading.Thread(target=self.__display, daemon=True)
+        self.back_thread = self.__threading.Thread(target=self.__back, daemon=True)
         self.display_thread.start()
         self.__time.sleep(1)
         self.back_thread.start()
@@ -144,8 +131,7 @@ class Dynamic(object):
 
     # 开始函数
     def start(self) -> None:
-        self.main_thread = self.__threading.Thread(
-            target=self.__main if self.__change() else self.__display)
+        self.main_thread = self.__threading.Thread(target=self.__main if self.__change() else self.__display)
         self.main_thread.start()
 
     # 停止函数

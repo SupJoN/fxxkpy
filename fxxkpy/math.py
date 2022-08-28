@@ -27,7 +27,7 @@ def PrimeFactorization(number: int) -> dict:
                 except:
                     result[2] = 1
                 num = __sympy.S(f"{num} // 2")
-            for i in range(3, 2*num + 3, 2):
+            for i in range(3, 2 * num + 3, 2):
                 if num == 1:
                     break
                 while __sympy.S(f"{num} // {i}") == __sympy.S(f"{num} / {i}"):
@@ -38,13 +38,9 @@ def PrimeFactorization(number: int) -> dict:
                     num = __sympy.S(f"{num} // {i}")
             return result
         else:
-            raise TypeError(
-                f"unsupported type for prime factorization: int less than 2"
-            )
+            raise TypeError(f"unsupported type for prime factorization: int less than 2")
     else:
-        raise TypeError(
-            f"unsupported type for prime factorization: {str(number.__class__)[7:len(str(number.__class__)) - 1]}"
-        )
+        raise TypeError(f"unsupported type for prime factorization: {str(number.__class__)[7:len(str(number.__class__)) - 1]}")
 
 
 # 最大公因数

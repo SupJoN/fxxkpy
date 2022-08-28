@@ -1,11 +1,11 @@
 # coding:utf-8
 # 飞机大战
-def AircraftWar():
+def AircraftWar() -> None:
     # 导入模块
     import os
     import random
     import time
-    os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ''  # 隐藏pygame的import欢迎显示
+    os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = ''  # 隐藏pygame的import欢迎显示
     import pygame
 
     # 初始化pygame环境
@@ -72,7 +72,7 @@ def AircraftWar():
     def handleEvent():
         for event in pygame.event.get():
             event: pygame.event.Event
-            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            if (event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 return True
             # 监听鼠标移动事件
@@ -192,7 +192,7 @@ def AircraftWar():
 
         # 碰撞检测方法
         def hit(self, component: "FlyingObject"):
-            return component.x > self.x - component.width and component.x < self.x + self.width and component.y > self.y - component.height and component.y < self.y + self.height
+            return (component.x > self.x - component.width and component.x < self.x + self.width and component.y > self.y - component.height and component.y < self.y + self.height)
 
         # 处理碰撞发生后要做的事
         def bang(self):
@@ -226,8 +226,7 @@ def AircraftWar():
     # 定义Enemy类
     class Enemy(FlyingObject):
         def __init__(self, x, y, width, height, type, life, score, frames, baseFrameCount):
-            FlyingObject.__init__(self, x, y, width, height,
-                                  life, frames, baseFrameCount)
+            FlyingObject.__init__(self, x, y, width, height, life, frames, baseFrameCount)
             self.x = random.randint(0, 1300 - self.width)
             self.y = -self.height
             self.type = type
@@ -236,8 +235,7 @@ def AircraftWar():
     # 定义Hero类
     class Hero(FlyingObject):
         def __init__(self, x, y, width, height, life, frames, baseFrameCount):
-            FlyingObject.__init__(self, x, y, width, height,
-                                  life, frames, baseFrameCount)
+            FlyingObject.__init__(self, x, y, width, height, life, frames, baseFrameCount)
             self.width = 60
             self.height = 75
             self.x = 450 + 480 / 2 - self.width / 2
@@ -247,16 +245,13 @@ def AircraftWar():
             draw(self.img, self.x, self.y)
 
         def shoot(self):
-            GameVar.bullets.append(
-                Bullet(self.x + self.width / 2 - 20, self.y, 9, 21, 1, b, 1))
-            GameVar.bullets.append(
-                Bullet(self.x + self.width / 2 + 10, self.y, 9, 21, 1, b, 1))
+            GameVar.bullets.append(Bullet(self.x + self.width / 2 - 20, self.y, 9, 21, 1, b, 1))
+            GameVar.bullets.append(Bullet(self.x + self.width / 2 + 10, self.y, 9, 21, 1, b, 1))
 
     # 定义Bullet类
     class Bullet(FlyingObject):
         def __init__(self, x, y, width, height, life, frames, baseFrameCount):
-            FlyingObject.__init__(self, x, y, width, height,
-                                  life, frames, baseFrameCount)
+            FlyingObject.__init__(self, x, y, width, height, life, frames, baseFrameCount)
 
         # 重写step方法
         def step(self):
@@ -288,8 +283,7 @@ def AircraftWar():
         elif n == 9:
             # 将打飞机放在列表中索引为0的位置
             if len(GameVar.enemies) == 0 or GameVar.enemies[0].type != 3:
-                GameVar.enemies.insert(
-                    0, Enemy(x3, -258, 169, 258, 3, 10, 20, e3, 2))
+                GameVar.enemies.insert(0, Enemy(x3, -258, 169, 258, 3, 10, 20, e3, 2))
 
     # 画组件方法
     def paintComponent(view):
@@ -451,18 +445,19 @@ def AircraftWar():
 
 
 # 红心大战
-def HeartWar():
+def HeartWar() -> None:
     import os
     import random
     import time
-    os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ''  # 隐藏pygame的import欢迎显示
+
+    os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""  # 隐藏pygame的import欢迎显示
     import pygame
 
     # 初始化pygame环境
     pygame.init()
 
     # 创建一个长宽分别为480/650的窗口
-    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (300, 50)
+    os.environ["SDL_VIDEO_WINDOW_POS"] = "%d,%d" % (300, 50)
     canvas = pygame.display.set_mode((480, 650))
 
     # 设置窗口标题
@@ -482,7 +477,7 @@ def HeartWar():
     def handleEvent():
         for event in pygame.event.get():
             event: pygame.event.Event
-            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            if (event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 return True
             if event.type == pygame.KEYDOWN:
@@ -496,10 +491,7 @@ def HeartWar():
                     key["s"] = time.time()
                 if event.key == pygame.K_0:
                     rlove.life += 1
-        if key["p"] < key["l"] < key["u"] < key["s"] and \
-                key["l"] - key["p"] <= 1 and \
-                key["u"] - key["l"] <= 1 and \
-                key["s"] - key["u"] <= 1:
+        if (key["p"] < key["l"] < key["u"] < key["s"] and key["l"] - key["p"] <= 1 and key["u"] - key["l"] <= 1 and key["s"] - key["u"] <= 1):
             rlove.life += 1
 
     # 写文字方法
@@ -524,24 +516,20 @@ def HeartWar():
     def createBlove(bloveNum):
         for i in range(0, bloveNum):
             randPos = random.randint(0, 3)
-            randX = random.random()*(480 - bWidth)
-            randY = random.random()*(480 - bHeight)
-            speed = random.random()*200 + bSpeed
+            randX = random.random() * (480 - bWidth)
+            randY = random.random() * (480 - bHeight)
+            speed = random.random() * 200 + bSpeed
             if randPos == 0:
-                arrBlove.append(Blove(randX, 0, loveB, bWidth,
-                                      bHeight, mouseX, mouseY, speed))
+                arrBlove.append(Blove(randX, 0, loveB, bWidth, bHeight, mouseX, mouseY, speed))
             elif randPos == 1:
-                arrBlove.append(Blove(462, randY, loveB, bWidth,
-                                      bHeight, mouseX, mouseY, speed))
+                arrBlove.append(Blove(462, randY, loveB, bWidth, bHeight, mouseX, mouseY, speed))
             elif randPos == 2:
-                arrBlove.append(Blove(randX, 632, loveB, bWidth,
-                                      bHeight, mouseX, mouseY, speed))
+                arrBlove.append(Blove(randX, 632, loveB, bWidth, bHeight, mouseX, mouseY, speed))
             elif randPos == 3:
-                arrBlove.append(Blove(0, randY, loveB, bWidth,
-                                      bHeight, mouseX, mouseY, speed))
+                arrBlove.append(Blove(0, randY, loveB, bWidth, bHeight, mouseX, mouseY, speed))
 
     # 创建黑心类
-    class Blove():
+    class Blove:
         nonlocal mouseX, mouseY
 
         def __init__(self, x, y, img, width, height, mouseX, mouseY, speed):
@@ -561,8 +549,7 @@ def HeartWar():
         nonlocal mouseX, mouseY, life
 
         def __init__(self, x, y, img, width, height, mouseX, mouseY, speed, life, invincible_time):
-            Blove.__init__(self, x, y, img, width,
-                           height, mouseX, mouseY, speed)
+            Blove.__init__(self, x, y, img, width, height, mouseX, mouseY, speed)
             self.life = life
             self.invincible_time = invincible_time
 
@@ -605,7 +592,7 @@ def HeartWar():
     def outSide():
         for arrB in arrBlove:
             arrB: Blove
-            if arrB.x + arrB.width < 0 or arrB.x > 480 or arrB.y + arrB.height < 0 or arrB.y > 650:
+            if (arrB.x + arrB.width < 0 or arrB.x > 480 or arrB.y + arrB.height < 0 or arrB.y > 650):
                 arrBlove.remove(arrB)
             break
 
@@ -653,7 +640,7 @@ def HeartWar():
         # 填充文字
         end = time.time()
         intervalTime = int(end - start)
-        fillText('你坚持了:' + str(intervalTime) + '年', (40, 20))
-        fillText('机会:' + str(rlove.life), (400, 20))
+        fillText("你坚持了:" + str(intervalTime) + "年", (40, 20))
+        fillText("机会:" + str(rlove.life), (400, 20))
         # 更新屏幕内容
         pygame.display.update()

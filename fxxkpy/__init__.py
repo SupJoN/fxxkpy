@@ -1,11 +1,10 @@
 # coding:utf-8
-from .start import *
-from .math import *
-from .vector import *
-from .remove import *
-from .languages import C as c
-from .languages import Cpp as cpp
-from .languages import Java as java
 from .error import *
-from .wallpaper import Dynamic as DynamicWallpaper
 from .game import *
+from .languages import *
+from .math import *
+from .FullBaseObject import *
+from .remove import *
+from .start import *
+from .vector import *
+from .wallpaper import Dynamic as DynamicWallpaper
