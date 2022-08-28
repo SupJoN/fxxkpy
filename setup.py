@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#coding:utf-8
 
 # Note: To use the 'upload' functionality of this file, you must:
 #   $ pipenv install twine --dev
@@ -22,12 +22,7 @@ REQUIRES_PYTHON = '>=3.6.0'
 VERSION = ver
 
 # What packages are required for this module to be executed?
-REQUIRED = [
-    'colorama',
-    'pygame',
-    'pywin32',
-    'sympy'
-]
+REQUIRED = ['colorama', 'pygame', 'pywin32', 'sympy']
 
 # What packages are optional?
 EXTRAS = {
@@ -39,10 +34,9 @@ EXTRAS = {
 # Except, perhaps the License and Trove Classifiers!
 # If you do change the License, remember to change the Trove Classifier for that!
 
-path = os.path.split(os.path.abspath(__file__))[0]
-
 # Import the README and use it as the long-description.
 # Note: this will only work if 'README.md' is present in your MANIFEST.in file!
+path = os.path.split(os.path.abspath(__file__))[0]
 try:
     with open(os.path.join(path, "README.md"), encoding='utf-8') as f:
         long_description = '\n' + f.read()
@@ -75,8 +69,7 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system(
-            '{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
 
         self.status('Uploading the package to PyPI via Twine…')
         os.system('twine upload dist/*')
@@ -101,8 +94,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(
-        exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
     # If your package is a single module, use this instead of 'packages':
     # py_modules = ['mypackage'],
 
@@ -116,12 +108,13 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+        'Development Status :: 5 - Production/Stable',
+        'Natural Language :: Chinese (Simplified)',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
+        'Programming Language :: Python :: Implementation :: CPython'
     ],
     # $ setup.py publish support.
     cmdclass={
