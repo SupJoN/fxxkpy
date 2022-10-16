@@ -132,8 +132,3 @@ dmypy.json
 
 # PyPI
 twine.ps1
-
-# beta
-enigma/
-JY/
-NaturalEngine/

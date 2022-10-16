@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>编辑恩格玛机</title>
+</head>
+
+<body>
+    <script>
+        function next() {
+            console.log("\n")
+        };
+
+        var $mine = "8" + 3 + 5;
+        console.log("'8' + 3 + 5 is " + $mine);
+        next();
+        {
+            let $null = null;
+            let $undefined;
+            console.log("$null is " + $null);
+            console.log("type $null is " + typeof $null);
+            console.log("$undefined is " + $undefined);
+            console.log("type $undefined is " + typeof $undefined);
+            console.log("$null == $undefined is " + ($null == $undefined));
+            console.log("$null == null is " + ($null == null));
+            console.log("$undefined == undefined is " + ($undefined == undefined));
+            console.log("null == undefined is " + (null == undefined));
+            next();
+        };
+        function multiplication(a, b) {
+            return a * b;
+        };
+        console.log("100 * 14 = " + multiplication(100, 14));
+        next();
+        var person = {
+            firstName: "Bill",
+            lastName: "Gates",
+            id: 678,
+            fullName: function () {
+                return this.firstName + " " + this.lastName;
+            }
+        };
+        console.log(person.fullName());
+        next();
+        {
+            let int = new Number(1);
+            console.log(int + " is " + typeof int);
+            console.log(1 + " is " + typeof 1);
+            console.log("int == 1 is " + (int == 1)); // True
+            console.log("int === 1 is " + (int === 1)); // False
+            next();
+        }
+    </script>
+</body>
+
+</html>
