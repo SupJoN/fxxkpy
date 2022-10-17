@@ -1,2 +1,2 @@
 # coding:utf-8
-ver = "beta"
+ver: str = "beta"

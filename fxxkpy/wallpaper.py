@@ -25,53 +25,45 @@ class Dynamic(object):
         程序运作是可能会改变缩放率, 忽略即可, 程序运行要十秒左右的时间, 最好啥都不干
     '''
     def __init__(self, video: str, player: str = "$default", command: str = "$default") -> None:
-        # 导入库
-        import os as __os
-        import platform as __platform
-        import threading as __threading
-        import time as __time
+        import os
+        import platform
+        import threading
 
-        import win32api as __win32api
-        import win32con as __win32con
-        import win32gui as __win32gui
-        import win32print as __win32print
-
-        self.__os = __os
-        self.__platform = __platform
-        self.__threading = __threading
-        self.__time = __time
-
-        self.__win32api = __win32api
-        self.__win32con = __win32con
-        self.__win32gui = __win32gui
-        self.__win32print = __win32print
-        # 判断系统是否为x86架构的64位Windows
-        if self.__platform.system() == "Windows" and self.__platform.machine() == "AMD64":
-            self.video = video
-            self.player = player if player != "$default" else f"{self.__os.path.split(self.__os.path.abspath(__file__))[0]}\\wallpaper\\ffplay\\ffplay.exe"
-            self.command = command.replace("$video", video, 1) if command != "$default" else f"{video} -noborder -fs -loop 0 -loglevel quiet"
-            self.SetDpi = f"{self.__os.path.split(self.__os.path.abspath(__file__))[0]}\\wallpaper\\SetDpi.exe"
-            self.userdpi = self.__getdpi()
-            self.stop_threads = False
-            self.display_thread = None
-            self.back_thread = None
-            self.main_thread = None
+        if platform.system() == "Windows" and platform.machine() == "AMD64":
+            self.video: str = video
+            self.player: str = player if player != "$default" else os.path.join(os.path.split(os.path.abspath(__file__))[0], "\\wallpaper\\ffplay\\ffplay.exe")
+            self.command: str = command.replace("$video", video, 1) if command != "$default" else f"{video} -noborder -fs -loop 0 -loglevel quiet"
+            self.SetDpi: str = os.path.join(os.path.split(os.path.abspath(__file__))[0], "\\wallpaper\\SetDpi.exe")
+            self.userdpi: float = self.__getdpi()
+            self.stop_threads: bool = False
+            self.display_thread: None | threading.Thread = None
+            self.back_thread: None | threading.Thread = None
+            self.main_thread: None | threading.Thread = None
         else:
-            raise Exception(f"CompatibilityError: {self.__platform.system} is not compatible with {self.__platform.machine()}")
+            raise Exception(f"CompatibilityError: {platform.system} is not compatible with {platform.machine()}")
 
     # 获取真实的分辨率
     def __get_real_resolution(self) -> tuple:
-        hDC = self.__win32gui.GetDC(0)
+        import win32con
+        import win32gui
+        import win32print
+
+        hDC = win32gui.GetDC(0)
+        print(type(hDC))
         # 横向分辨率
-        w = self.__win32print.GetDeviceCaps(hDC, self.__win32con.DESKTOPHORZRES)
+        w = win32print.GetDeviceCaps(hDC, win32con.DESKTOPHORZRES)
         # 纵向分辨率
-        h = self.__win32print.GetDeviceCaps(hDC, self.__win32con.DESKTOPVERTRES)
+        h = win32print.GetDeviceCaps(hDC, win32con.DESKTOPVERTRES)
+
         return w, h
 
     # 获取缩放后的分辨率
     def __get_screen_size(self) -> tuple:
-        w = self.__win32api.GetSystemMetrics(0)
-        h = self.__win32api.GetSystemMetrics(1)
+        import win32api
+
+        w = win32api.GetSystemMetrics(0)
+        h = win32api.GetSystemMetrics(1)
+
         return w, h
 
     # 获取DPI
@@ -84,46 +76,64 @@ class Dynamic(object):
 
     # 缩放设置为100%
     def __change(self) -> bool:
+        import win32api
+
         if self.userdpi == 100:
             return False
         else:
-            self.__win32api.ShellExecute(0, 'open', self.SetDpi, ' 100', '', 1)
+            win32api.ShellExecute(0, 'open', self.SetDpi, ' 100', '', 1)
             return True
 
     # 缩放自动调回初始值
     def __back(self) -> None:
-        self.__win32api.ShellExecute(0, 'open', self.SetDpi, str(self.userdpi), '', 1)
+        import win32api
+
+        win32api.ShellExecute(0, 'open', self.SetDpi, str(self.userdpi), '', 1)
 
     # 播放视频
     def __play(self) -> None:
-        self.__os.popen(f"{self.player} {self.command}")
+        import os
+
+        os.popen(f"{self.player} {self.command}")
 
     # 隐藏WorkerW
     def __hide(self, hwnd: int, hwnds: None) -> None:
-        hdef = self.__win32gui.FindWindowEx(hwnd, 0, "SHELLDLL_DefView", None)  # 枚举窗口寻找特定类
+        import time
+
+        import win32con
+        import win32gui
+
+        hdef = win32gui.FindWindowEx(hwnd, 0, "SHELLDLL_DefView", None)  # 枚举窗口寻找特定类
         if hdef != 0:
-            workerw = self.__win32gui.FindWindowEx(0, hwnd, "WorkerW", None)  # 找到hdef后寻找WorkerW
-            self.__win32gui.ShowWindow(workerw, self.__win32con.SW_HIDE)  # 隐藏WorkerW
+            workerw = win32gui.FindWindowEx(0, hwnd, "WorkerW", None)  # 找到hdef后寻找WorkerW
+            win32gui.ShowWindow(workerw, win32con.SW_HIDE)  # 隐藏WorkerW
             while True:
-                self.__time.sleep(100)  # 进入循环防止壁纸退出
+                time.sleep(100)  # 进入循环防止壁纸退出
 
     # 显示壁纸
     def __display(self) -> None:
+        import time
+
+        import win32gui
+
         self.__play()
-        self.__time.sleep(0.5)
-        progman = self.__win32gui.FindWindow("Progman", "Program Manager")  # 寻找Progman
-        self.__win32gui.SendMessageTimeout(progman, 0x52C, 0, 0, 0, 0)  # 发送0x52C消息
-        videowin = self.__win32gui.FindWindow("SDL_app", None)  # 寻找ffplay 播放窗口
-        self.__win32gui.SetParent(videowin, progman)  # 设置子窗口
-        self.__win32gui.EnumWindows(self.__hide, None)  # 枚举窗口, 回调hide函数
+        time.sleep(0.5)
+        progman = win32gui.FindWindow("Progman", "Program Manager")  # 寻找Progman
+        win32gui.SendMessageTimeout(progman, 0x52C, 0, 0, 0, 0)  # 发送0x52C消息
+        videowin = win32gui.FindWindow("SDL_app", None)  # 寻找ffplay 播放窗口
+        win32gui.SetParent(videowin, progman)  # 设置子窗口
+        win32gui.EnumWindows(self.__hide, None)  # 枚举窗口, 回调hide函数
 
     # 主函数
     def __main(self) -> None:
-        self.__time.sleep(0.5)
-        self.display_thread = self.__threading.Thread(target=self.__display, daemon=True)
-        self.back_thread = self.__threading.Thread(target=self.__back, daemon=True)
+        import threading
+        import time
+
+        time.sleep(0.5)
+        self.display_thread: threading.Thread = threading.Thread(target=self.__display, daemon=True)
+        self.back_thread: threading.Thread = threading.Thread(target=self.__back, daemon=True)
         self.display_thread.start()
-        self.__time.sleep(0.5)
+        time.sleep(0.5)
         self.back_thread.start()
         while not self.stop_threads:
             pass
@@ -131,10 +141,12 @@ class Dynamic(object):
 
     # 开始函数
     def start(self) -> None:
-        self.main_thread = self.__threading.Thread(target=self.__main if self.__change() else self.__display)
+        import threading
+
+        self.main_thread: threading.Thread = threading.Thread(target=self.__main if self.__change() else self.__display)
         self.main_thread.start()
 
     # 停止函数
     def stop(self) -> None:
-        self.stop_threads = True
+        self.stop_threads: bool = True
         self.main_thread.join()

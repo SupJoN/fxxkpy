@@ -1,6 +1,6 @@
 # coding:utf-8
 def __start() -> None:
-    FxxkPy = '''\
+    FxxkPy: str = '''\
 .------..------..------..------..------..------.
 |F.--. ||X.--. ||X.--. ||K.--. ||P.--. ||Y.--. |
 | :(): || :/\: || :/\: || :/\: || :/\: || (\/) |
@@ -15,7 +15,7 @@ def __start() -> None:
 
     from .version import ver
 
-    color = '' if not randint(0, 2) else Fore.GREEN if not randint(0, 4) else Fore.YELLOW if randint(0, 1) else Fore.BLUE
+    color: str = '' if not randint(0, 2) else Fore.GREEN if not randint(0, 4) else Fore.YELLOW if randint(0, 1) else Fore.BLUE
     print(f"{color}FxxkPy {ver} (Python {'.'.join(map(str, version_info[0:3]))})")
     print(FxxkPy, end='')
     print(Style.RESET_ALL)

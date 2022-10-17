@@ -1,5 +1,9 @@
-include fxxkpy\enigma\static\*
+include fxxkpy\enigma\static\404.html
+include fxxkpy\enigma\static\apply.html
+include fxxkpy\enigma\static\favicon.ico
+include fxxkpy\enigma\static\game.html
+include fxxkpy\enigma\static\index.html
+include fxxkpy\enigma\static\vue.js
 include fxxkpy\game\AircraftWar\*
 include fxxkpy\game\HeartWar\*
-include fxxkpy\wallpaper\*
-include fxxkpy\wallpaper\ffplay\*
+recursive-include fxxkpy\wallpaper\*
