@@ -15,12 +15,14 @@ class cpp(object):
             print(other, end='')
             return self
 
-    cout = __Cout()
-    endl = '\n'
+    cout: __Cout = __Cout()
+    endl: str = "\n"
 
 
 # Java类
 class java(object):
-    class System():
-        class out():
-            println = print
+    class System(object):
+        class out(object):
+            from types import FunctionType
+            println: FunctionType = print
+            del FunctionType
