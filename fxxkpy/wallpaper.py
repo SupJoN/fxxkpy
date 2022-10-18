@@ -75,14 +75,14 @@ class Dynamic(object):
         else:
             import win32api
 
-            win32api.ShellExecute(0, 'open', self.SetDpi, ' 100', '', 1)
+            win32api.ShellExecute(0, "open", self.SetDpi, " 100", "", 1)
             return True
 
     # 缩放自动调回初始值
     def __back(self) -> None:
         import win32api
 
-        win32api.ShellExecute(0, 'open', self.SetDpi, str(self.userdpi), '', 1)
+        win32api.ShellExecute(0, "open", self.SetDpi, str(self.userdpi), "", 1)
 
     # 播放视频
     def __play(self) -> None:
@@ -123,11 +123,11 @@ class Dynamic(object):
         import threading
         import time
 
-        time.sleep(0.125)
+        time.sleep(0.5)
         self.display_thread: threading.Thread = threading.Thread(target=self.__display, daemon=True)
         self.back_thread: threading.Thread = threading.Thread(target=self.__back, daemon=True)
         self.display_thread.start()
-        time.sleep(0.125)
+        time.sleep(0.5)
         self.back_thread.start()
         while not self.stop_threads:
             pass

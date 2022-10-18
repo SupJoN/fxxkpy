@@ -5,7 +5,7 @@ def AircraftWar() -> None:
     import os
     import random
     import time
-    os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = ''  # 隐藏pygame的import欢迎显示
+    os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = ""  # 隐藏pygame的import欢迎显示
     import pygame
 
     # 初始化pygame环境
@@ -14,7 +14,7 @@ def AircraftWar() -> None:
     # 创建一个长宽分别为1200/715的白色窗口
     x = 80
     y = 27
-    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
+    os.environ["SDL_VIDEO_WINDOW_POS"] = "%d,%d" % (x, y)
     canvas = pygame.display.set_mode((1200, 715))
     canvas.fill((255, 255, 255))
 

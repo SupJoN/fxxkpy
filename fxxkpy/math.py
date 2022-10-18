@@ -77,7 +77,7 @@ def GCF(num1: int, num2: int, sort: bool = False) -> int:
         else:
             return GCF(max_num % min_num, min_num, sort=True)
     else:
-        __operation_error(num1, num2, 'GCF')
+        __operation_error(num1, num2, "GCF")
 
 
 # 最小公倍数
@@ -143,10 +143,10 @@ def quickly(data: list, parameter: any = None) -> list:
 # 计算器
 def calculator(input_text: str) -> int | float:
     text = list(input_text)
-    finally_ = ''
+    finally_ = ""
     for i in range(len(text)):
-        if input_text[i] == '^':
-            text[i] = '**'
+        if input_text[i] == "^":
+            text[i] = "**"
     for i in text:
         finally_ += i
     return eval(finally_)

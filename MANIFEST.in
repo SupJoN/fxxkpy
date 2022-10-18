@@ -6,4 +6,5 @@ include fxxkpy\enigma\static\index.html
 include fxxkpy\enigma\static\vue.js
 include fxxkpy\game\AircraftWar\*
 include fxxkpy\game\HeartWar\*
-recursive-include fxxkpy\wallpaper\*
+include fxxkpy\wallpaper\*
+include fxxkpy\wallpaper\ffplay\*
