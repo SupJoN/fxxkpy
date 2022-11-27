@@ -7,7 +7,7 @@ def warning_remove(file: str, isself: bool = False) -> None:
     from colorama import Fore, Style
 
     if os.path.exists(file):
-        confirm = input(f"{Fore.YELLOW}警告{Style.RESET_ALL}: {'此文件' if isself else file} 将被删除(y/N)")
+        confirm: str = input(f"{Fore.YELLOW}警告{Style.RESET_ALL}: {'此文件' if isself else file} 将被删除(y/N)")
         try:
             if confirm == "y" or confirm == "Y":
                 executing: bool = True

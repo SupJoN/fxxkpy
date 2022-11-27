@@ -1,9 +1,9 @@
 # coding:utf-8
-from decimal import Decimal as __Decimal
+from typing import Any as __Any
+from sys import modules as __modules
 
-from .error import operation_error as __operation_error
-
-inf = float("inf")
+# 无穷大
+inf: float = float("inf")
 
 
 # 分解质因数
@@ -19,9 +19,11 @@ def PrimeFactorization(number: int) -> dict:
     返回值:
         一个字典，键是质因数，值是指数
     '''
-    if type(number) in (int, float, str, __Decimal):
+    from decimal import Decimal
+
+    if isinstance(number, (int, float, str, Decimal)):
         try:
-            Decimal_number = __Decimal(str(number))
+            Decimal_number: Decimal = Decimal(str(number))
         except:
             raise ValueError(f"cannot be parsed: {repr(number)}")
         if Decimal_number % 1 == 0:
@@ -63,7 +65,7 @@ def GCF(num1: int, num2: int, sort: bool = False) -> int:
         num2: 第二个正整数
         sort: 默认为 False ，如果 sort 参数为 True ，则默认 num1 为较小数字，num2 为较大数字
     '''
-    if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
+    if isinstance(num1, int) and num1 > 0 and isinstance(num2, int) and num2 > 0:
         if sort:
             min_num = num1
             max_num = num2
@@ -77,7 +79,8 @@ def GCF(num1: int, num2: int, sort: bool = False) -> int:
         else:
             return GCF(max_num % min_num, min_num, sort=True)
     else:
-        __operation_error(num1, num2, "GCF")
+        from .error import operation_error
+        operation_error(num1, num2, "GCF")
 
 
 # 最小公倍数
@@ -92,14 +95,15 @@ def LCM(num1: int, num2: int, sort: bool = False) -> int:
         num2: 第二个正整数
         sort: 默认为 False ，如果 sort 参数为 True ，则默认 num1 为较大数字，num2 为较小数字
     '''
-    if type(num1) == int and num1 > 0 and type(num2) == int and num2 > 0:
+    if isinstance(num1, int) and num1 > 0 and isinstance(num2, int) and num2 > 0:
         return num1 * num2 // GCF(num1, num2, sort=sort)
     else:
-        __operation_error(num1, num2, 'LCM')
+        from .error import operation_error
+        operation_error(num1, num2, 'LCM')
 
 
 # 快速排序
-def quickly(data: list, parameter: any = None) -> list:
+def quickly(data: list, parameter: __Any = None) -> list:
     '''
     列表的快速排序函数
 
@@ -110,7 +114,7 @@ def quickly(data: list, parameter: any = None) -> list:
         parameter: 默认为 None ，代表参数，为 None 时默认没有参数
     '''
     if parameter == None:
-        original = [] + data  # 不改变原数据
+        original: list = [] + data  # 不改变原数据
         if len(original) > 1:
             standard = original[0]
             del original[0]
@@ -141,7 +145,7 @@ def quickly(data: list, parameter: any = None) -> list:
 
 '''
 # 计算器
-def calculator(input_text: str) -> int | float:
+def calculator(input_text: str) -> float:
     text = list(input_text)
     finally_ = ""
     for i in range(len(text)):
@@ -153,13 +157,20 @@ def calculator(input_text: str) -> int | float:
 '''
 
 try:
-    from sympy import S as __S
+    import sympy as __sympy
 
     # 斐波那契数列
-    def fibonacci_sequence(index: int) -> int:
-        return int(__S(f"1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** {index} - ((1 - 5 ** 0.5) / 2) ** {index})"))
+    def fibonacci_sequence(index: int) -> __sympy.core.Integer:
+        return __sympy.core.Integer(__sympy.S(f"1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** {index} - ((1 - 5 ** 0.5) / 2) ** {index})"))
 except:
-    pass
+    import decimal as __decimal
+
+    # 斐波那契数列
+    def fibonacci_sequence(index: int) -> __decimal.Decimal:
+        a = b = __decimal.Decimal("1")
+        for i in range(index - 1):
+            a, b = b, a + b
+        return a
 
 
 # 质数判断
@@ -200,3 +211,6 @@ def isFloat(value: str) -> bool:
             return False
     else:
         return False
+
+
+del __Any

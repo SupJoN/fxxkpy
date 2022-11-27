@@ -1,4 +1,5 @@
 # coding:utf-8
+from . import enigma
 from .error import *
 from .FullBaseObject import *
 from .FullFunction import *

@@ -10,7 +10,7 @@ try:
 except:
     pass
 
-__all__ = ["HE"]
+__all__ = ("HE", )
 
 
 class RemoveHeDecorator(ast.NodeTransformer):
@@ -74,7 +74,7 @@ class RewriteHeCallStmt(ast.NodeTransformer):
         binary.visit(arg)
         return binary.exprs if len(binary.exprs) else [arg]
 
-    def visit_Expr(self, node: ast.Expr) -> ast.Expr | list:
+    def visit_Expr(self, node: ast.Expr) -> (ast.Expr | list):
         """
         只有函数调用语句（`Expr -> Call`）可以被展开
         """

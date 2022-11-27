@@ -1,5 +1,8 @@
 # coding:utf-8
-def pyin(prompt: str = "", quantity: int = 1, inType: type = float, mustReturnTuple: bool = False) -> int | float | complex | str | tuple[int | float | complex | str]:
+from typing import Any as __Any
+
+
+def pyin(prompt: str = "", quantity: int = 1, inType: type = float, mustReturnTuple: bool = False) -> (int | float | complex | str | tuple[int | float | complex | str]):
     '''
     仿 scanf 的输入方法
 
@@ -11,7 +14,7 @@ def pyin(prompt: str = "", quantity: int = 1, inType: type = float, mustReturnTu
         inType: 输入的类型, 默认为 ```float```
         mustReturnTuple: 返回值是否必须为 ```tuple```, 默认为 ```False```
     '''
-    if type(quantity) == int and quantity > 0:
+    if isinstance(quantity, int) and quantity > 0:
         import re
 
         RULE: dict[type:str] = {
@@ -49,11 +52,7 @@ def pyin(prompt: str = "", quantity: int = 1, inType: type = float, mustReturnTu
                     for j in inlist:
                         if j == i:
                             try:
-                                i: str = i.replace("i", "j")
-                                i: str = i.replace("+j", "+1j")
-                                i: str = i.replace("-j", "-1j")
-                                i: str = f"1{i}" if i[0] == "j" else i
-                                values.append(eval(i))
+                                values.append(eval(f"1{i}" if (i := i.replace("i", "j").replace("+j", "+1j").replace("-j", "-1j"))[0] == "j" else i))
                             except:
                                 pass
         if mustReturnTuple or quantity - 1:
@@ -64,14 +63,17 @@ def pyin(prompt: str = "", quantity: int = 1, inType: type = float, mustReturnTu
         raise TypeError("pyin() needs the \'quantity\' who is 'int' and more than zero")
 
 
-def pyout(*args: any, **kwargs: any) -> None:
+def pyout(*args: __Any, **kwargs: __Any) -> None:
     print(str(args[0]).format(*args[1::]), **kwargs)
 
 
-def getpass(username_prompt="username", password_prompt="password"):
+def getpass(username_prompt: str = "username", password_prompt: str = "password") -> tuple[str, str]:
     from getpass import getpass
 
-    user = input(f"{username_prompt}: ")
-    password = getpass(f"{password_prompt}: ")
+    user: str = input(f"{username_prompt}: ")
+    password: str = getpass(f"{password_prompt}: ")
 
     return user, password
+
+
+del __Any

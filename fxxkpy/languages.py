@@ -23,6 +23,6 @@ class cpp(object):
 class java(object):
     class System(object):
         class out(object):
-            from types import FunctionType
-            println: FunctionType = print
-            del FunctionType
+            from typing import Callable
+            println: Callable[[str], None] = print
+            del Callable

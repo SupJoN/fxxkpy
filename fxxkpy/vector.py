@@ -3,102 +3,74 @@
 class vector(object):
     # 两坐标距离
     @staticmethod
-    def distance3(vector3: "Vector3", other_vector3: "Vector3") -> int | float:
-        import sympy as __sympy
-        res = __sympy.S(f"(({vector3.x} - {other_vector3.x}) ** 2 + ({vector3.y} - {other_vector3.y}) ** 2 + ({vector3.z} - {other_vector3.z}) ** 2) ** 0.5")
-        if res == int(res):
-            return int(res)
-        else:
-            return float(res)
+    def distance3(vector3: "Vector3", other_vector3: "Vector3") -> float:
+        from sympy import S
+
+        res = S(f"(({vector3.x} - {other_vector3.x}) ** 2 + ({vector3.y} - {other_vector3.y}) ** 2 + ({vector3.z} - {other_vector3.z}) ** 2) ** 0.5")
+        return float(res)
 
 
 # 三维坐标
 class Vector3(object):
-    def __init__(self: "Vector3", x: int | float, y: int | float, z: int | float) -> None:
-        self.x = x
-        self.y = y
-        self.z = z
+    from typing import Any as __Any
 
-    def __add__(self: "Vector3", other: "Vector3") -> "Vector3":
-        if type(other) == self.__class__:
+    def __init__(self, x: float, y: float, z: float) -> None:
+        self.x: float = x
+        self.y: float = y
+        self.z: float = z
+
+    def __add__(self, other: "Vector3") -> "Vector3":
+        if isinstance(other, Vector3):
             return Vector3(self.x + other.x, self.y + other.y, self.z + other.z)
         else:
-            str_ = ''
-            other_class = list(str(other.__class__))
-            del other_class[-1]
-            for index, item in enumerate(other_class):
-                if index > 5:
-                    str_ += item
-            raise Exception("TypeError: unsupported operand type(s) for +: 'Vector' and " + str_)
+            from .error import operation_error
+            operation_error(self, other, "+")
 
-    def __radd__(self: "Vector3", other: "Vector3") -> "Vector3":
-        if type(other) == self.__class__:
+    def __radd__(self, other: "Vector3") -> "Vector3":
+        if isinstance(other, Vector3):
             return Vector3(self.x + other.x, self.y + other.y, self.z + other.z)
         else:
-            str_ = ''
-            other_class = list(str(other.__class__))
-            del other_class[-1]
-            for index, item in enumerate(other_class):
-                if index > 5:
-                    str_ += item
-            raise Exception("TypeError: unsupported operand type(s) for +: 'Vector' and " + str_)
+            from .error import operation_error
+            operation_error(other, self, "+")
 
-    def __iadd__(self: "Vector3", other: "Vector3") -> "Vector3":
-        if type(other) == self.__class__:
+    def __iadd__(self, other: "Vector3") -> "Vector3":
+        if isinstance(other, Vector3):
             return Vector3(self.x + other.x, self.y + other.y, self.z + other.z)
         else:
-            str_ = ''
-            other_class = list(str(other.__class__))
-            del other_class[-1]
-            for index, item in enumerate(other_class):
-                if index > 5:
-                    str_ += item
-            raise Exception("TypeError: unsupported operand type(s) for +: 'Vector' and " + str_)
+            from .error import operation_error
+            operation_error(self, other, "+=")
 
-    def __mul__(self: "Vector3", other: int) -> "Vector3":
-        if type(other) == int:
+    def __mul__(self, other: int) -> "Vector3":
+        if isinstance(other, int):
             return Vector3(self.x * other, self.y * other, self.z * other)
         else:
-            str_ = ''
-            other_class = list(str(other.__class__))
-            del other_class[-1]
-            for index, item in enumerate(other_class):
-                if index > 5:
-                    str_ += item
-            raise Exception("TypeError: unsupported operand type(s) for *: 'Vector' and " + str_)
+            from .error import operation_error
+            operation_error(self, other, "*")
 
-    def __rmul__(self: "Vector3", other: int) -> "Vector3":
-        if type(other) == int:
+    def __rmul__(self, other: int) -> "Vector3":
+        if isinstance(other, int):
             return Vector3(self.x * other, self.y * other, self.z * other)
         else:
-            str_ = ''
-            other_class = list(str(other.__class__))
-            del other_class[-1]
-            for index, item in enumerate(other_class):
-                if index > 5:
-                    str_ += item
-            raise Exception("TypeError: unsupported operand type(s) for *: 'Vector' and " + str_)
+            from .error import operation_error
+            operation_error(other, self, "*")
 
-    def __imul__(self: "Vector3", other: int) -> "Vector3":
-        if type(other) == int:
+    def __imul__(self, other: int) -> "Vector3":
+        if isinstance(other, int):
             return Vector3(self.x * other, self.y * other, self.z * other)
         else:
-            str_ = ''
-            other_class = list(str(other.__class__))
-            del other_class[-1]
-            for index, item in enumerate(other_class):
-                if index > 5:
-                    str_ += item
-            raise Exception("TypeError: unsupported operand type(s) for *: 'Vector' and " + str_)
+            from .error import operation_error
+            operation_error(self, other, "*=")
 
-    def __eq__(self: "Vector3", other: any) -> bool:
-        if type(other) == self.__class__:
+    def __eq__(self, other: __Any) -> bool:
+        if isinstance(other, Vector3):
             return self.x == other.x and self.y == other.y and self.z == other.z
         else:
             return False
 
-    def __ne__(self: "Vector3", other: any) -> bool:
+    def __ne__(self, other: __Any) -> bool:
         return not self.__eq__(other)
 
-    def __str__(self: "Vector3") -> str:
+    def __str__(self) -> str:
         return f"{self.__dict__}"
+
+    del __Any

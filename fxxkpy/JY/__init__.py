@@ -2,6 +2,6 @@
 from .reference import *
 from .start import *
 
-__doc__ = '''\
+__doc__: str = '''\
 这个库是为了 JY 语言 及 JY 写的\
 '''

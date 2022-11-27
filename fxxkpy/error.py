@@ -1,5 +1,8 @@
 # coding:utf-8
-def operation_error(variable1: any, variable2: any, methods: str) -> None:
+import typing
+
+
+def operation_error(variable1: typing.Any, variable2: typing.Any, methods: str) -> None:
     str_class1 = str(variable1.__class__)
     str_class2 = str(variable2.__class__)
     class1 = str_class1[7:len(str_class1) - 1]
@@ -9,7 +12,7 @@ def operation_error(variable1: any, variable2: any, methods: str) -> None:
     raise TypeError(error)
 
 
-def compare_error(variable1: any, variable2: any, methods: str) -> None:
+def compare_error(variable1: typing.Any, variable2: typing.Any, methods: str) -> None:
     str_class1 = str(variable1.__class__)
     str_class2 = str(variable2.__class__)
     class1 = str_class1[7:len(str_class1) - 1]

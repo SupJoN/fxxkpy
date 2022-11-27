@@ -23,6 +23,7 @@ VERSION = ver
 
 # What packages are required for this module to be executed?
 REQUIRED = [
+    "bottle",
     "colorama",
     "pygame",
     "pywin32",
@@ -30,7 +31,7 @@ REQUIRED = [
 
 # What packages are optional?
 EXTRAS = {
-    "more support": ["fraction", "fractions", "sympy"],
+    "more support": ["fraction", "sympy"],
     "look better": ["rich"],
 }
 
@@ -98,7 +99,12 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+    packages=find_packages(exclude=(
+        "tests",
+        "*.tests",
+        "*.tests.*",
+        "tests.*",
+    )),
     # If your package is a single module, use this instead of "packages":
     # py_modules = ["mypackage"],
 
@@ -109,7 +115,7 @@ setup(
     extras_require=EXTRAS,
     include_package_data=True,
     license="MIT",
-    classifiers=[
+    classifiers=(
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
 
@@ -137,15 +143,16 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
+        # "Programming Language :: Python :: 3.6",
+        # "Programming Language :: Python :: 3.7",
+        # "Programming Language :: Python :: 3.8",
+        # "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
-        "Programming Language :: Python :: Implementation :: CPython"
-    ],
+        "Programming Language :: Python :: Implementation :: CPython",
+        # Alternative syntax for unions requires Python 3.10 or newerPylance
+    ),
     # $ setup.py publish support.
     cmdclass={
         "upload": UploadCommand,
