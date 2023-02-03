@@ -1,5 +1,58 @@
 # coding:utf-8
-import threading as __threading
+from threading import Thread as _Thread
+from decimal import getcontext as _getcontext
+
+_getcontext().prec = 64
+
+
+class _Number(object):
+    '''
+    数字
+    '''
+
+    __slots__: tuple[str, ...] = ()
+
+    _Prec: type = type("_Prec", (int, ), {})
+    __short: _Prec = _Prec(32)
+    __middle: _Prec = _Prec(64)
+    __long: _Prec = _Prec(128)
+    __longlong: _Prec = _Prec(256)
+
+    @property
+    def default(self) -> _Prec:
+        return self.__middle
+
+    @property
+    def short(self) -> _Prec:
+        return self.__short
+
+    @property
+    def middle(self) -> _Prec:
+        return self.__middle
+
+    @property
+    def long(self) -> _Prec:
+        return self.__long
+
+    @property
+    def longlong(self) -> _Prec:
+        return self.__longlong
+
+    @property
+    def prec(self) -> int:
+        '''
+        `decimal.Decimal` 的长度
+        '''
+        from decimal import getcontext as _getcontext
+        return _getcontext().prec
+
+    @prec.setter
+    def prec(self, value: int) -> None:
+        from decimal import getcontext as _getcontext
+        _getcontext().prec: int = value
+
+
+number: _Number = _Number()
 
 
 # 完整的字典
@@ -20,13 +73,12 @@ class FullDict(object):
         `__KeyIterator`: FullDict 的迭代器
     """
 
-    import typing as __typing
-    from typing import overload as __overload
+    import typing as _typing
 
     __slots__: tuple[str, ...] = ("__default", "__clear", "__fdict", "__index")
 
     class KeyIterator(object):
-        import typing as __typing
+        import typing as _typing
 
         __slots__: tuple[str, ...] = ("index", "current")
 
@@ -34,11 +86,11 @@ class FullDict(object):
             self.index: list = index
             self.current: int = 0
 
-        def __next__(self) -> __typing.Any:
-            import typing as __typing
+        def __next__(self) -> _typing.Any:
+            import typing as _typing
 
             if self.current < len(self.index):
-                item: __typing.Any = self.index[self.current]
+                item: _typing.Any = self.index[self.current]
                 self.current += 1
                 return item
             else:
@@ -47,7 +99,7 @@ class FullDict(object):
         def __iter__(self) -> "FullDict.__KeyIterator":
             return self
 
-    def __init__(self, *args: __typing.Any, **kwargs: __typing.Any) -> None:
+    def __init__(self, *args: _typing.Any, **kwargs: _typing.Any) -> None:
         from collections import defaultdict
 
         length: int = len(args)
@@ -55,8 +107,8 @@ class FullDict(object):
             if length - 1:
                 self.__default: tuple = args
             else:
-                import typing as __typing
-                self.__default: __typing.Any = args[0]
+                import typing as _typing
+                self.__default: _typing.Any = args[0]
         else:
             self.__default: None = None
         self.__fdict: defaultdict = defaultdict(lambda: self.__default)
@@ -66,22 +118,22 @@ class FullDict(object):
                 self.__clear: bool = True
             else:
                 self.__clear: bool = False
-        except:
+        except Exception:
             self.__clear: bool = False
 
         self.__index: list = []
 
     @property
-    def default(self) -> __typing.Any:
+    def default(self) -> _typing.Any:
         return self.__default
 
     @default.setter
-    def default(self, value: __typing.Any) -> None:
+    def default(self, value: _typing.Any) -> None:
         import typing
         self.__default: typing.Any = value
 
     @property
-    def fdict(self) -> __typing.Any:
+    def fdict(self) -> _typing.Any:
         return self.__fdict
 
     def clear(self) -> None:
@@ -99,32 +151,32 @@ class FullDict(object):
         return result
 
     @staticmethod
-    def fromkeys(seq: __typing.Iterable, default: __typing.Any) -> "FullDict":
+    def fromkeys(seq: _typing.Iterable, default: _typing.Any) -> "FullDict":
         result: FullDict = FullDict(default)
         for i in seq:
             result[i] = default
         return result
 
-    def get(self, key: __typing.Any, default: __typing.Any = None) -> __typing.Any:
+    def get(self, key: _typing.Any, default: _typing.Any = None) -> _typing.Any:
         return self[key] if key in self.__index else default
 
-    def setdefault(self, key, default: __typing.Any = None) -> __typing.Any:
+    def setdefault(self, key, default: _typing.Any = None) -> _typing.Any:
         import typing
         self[key]: typing.Any = self[key] if key in self.__index else default
         return self[key]
 
-    @__overload
-    def pop(self, key: __typing.Any) -> __typing.Any:
+    @_typing.overload
+    def pop(self, key: _typing.Any) -> _typing.Any:
         ...
 
-    @__overload
-    def pop(self, key: __typing.Any, default: __typing.Any) -> __typing.Any:
+    @_typing.overload
+    def pop(self, key: _typing.Any, default: _typing.Any) -> _typing.Any:
         ...
 
-    def pop(self, *args: __typing.Any, **kwargs: __typing) -> __typing.Any:
-        import typing as __typing
+    def pop(self, *args: _typing.Any, **kwargs: _typing) -> _typing.Any:
+        import typing as _typing
 
-        def key_pop(key: __typing.Any) -> __typing.Any:
+        def key_pop(key: _typing.Any) -> _typing.Any:
             if args[0] not in self.__index:
                 raise KeyError(repr(key))
             else:
@@ -133,7 +185,7 @@ class FullDict(object):
                 del self[key]
                 return result
 
-        def default_pop(key: __typing.Any, default: __typing.Any) -> __typing.Any:
+        def default_pop(key: _typing.Any, default: _typing.Any) -> _typing.Any:
             if key in self.__index:
                 import typing
                 result: typing.Any = self[key]
@@ -150,7 +202,7 @@ class FullDict(object):
         else:
             raise TypeError(f"pop() takes from 1 to 2 positional arguments but {len(args)} were given")
 
-    def popitem(self) -> tuple[__typing.Any, __typing.Any]:
+    def popitem(self) -> tuple[_typing.Any, _typing.Any]:
         if len(self.__index) != 0:
             result = self.__index[-1], self[self.__index[-1]]
             del self[self.__index[-1]]
@@ -158,17 +210,17 @@ class FullDict(object):
         else:
             raise KeyError("popitem(): dictionary is empty")
 
-    def items(self) -> list[tuple[__typing.Any, __typing.Any]]:
+    def items(self) -> list[tuple[_typing.Any, _typing.Any]]:
         import typing
         result: list[tuple[typing.Any, typing.Any]] = []
         for i in self.__index:
             result.append((i, self.__fdict[i]))
         return result
 
-    def keys(self) -> list[__typing.Any]:
+    def keys(self) -> list[_typing.Any]:
         return self.__index
 
-    def values(self) -> list[__typing.Any]:
+    def values(self) -> list[_typing.Any]:
         import typing
         result: list[typing.Any] = []
         for i in self.__index:
@@ -178,18 +230,18 @@ class FullDict(object):
     def __len__(self) -> int:
         return len(self.__index)
 
-    def __contains__(self, item: __typing.Any) -> bool:
+    def __contains__(self, item: _typing.Any) -> bool:
         return item in self.__index
 
-    def __getitem__(self, key: __typing.Any) -> __typing.Any:
+    def __getitem__(self, key: _typing.Any) -> _typing.Any:
         return self.__fdict.__getitem__(key)
 
-    def __setitem__(self, key: __typing.Any, value: __typing.Any) -> None:
+    def __setitem__(self, key: _typing.Any, value: _typing.Any) -> None:
         if key not in self.__index:
             self.__index.append(key)
         self.__fdict.__setitem__(key, value)
 
-    def __delitem__(self, key: __typing.Any) -> None:
+    def __delitem__(self, key: _typing.Any) -> None:
         if key in self.__index:
             self.__index.remove(key)
             self.__fdict.__delitem__(key)
@@ -199,13 +251,13 @@ class FullDict(object):
     def __bool__(self) -> bool:
         return not not self.__index
 
-    def __eq__(self, other: __typing.Any) -> bool:
+    def __eq__(self, other: _typing.Any) -> bool:
         if isinstance(other, FullDict):
             return other._FullDict__fdict == self.__fdict
         else:
             return False
 
-    def __ne__(self, other: __typing.Any) -> bool:
+    def __ne__(self, other: _typing.Any) -> bool:
         return not self.__eq__(other)
 
     def __iter__(self) -> "FullDict.KeyIterator":
@@ -218,8 +270,7 @@ class FullDict(object):
     def __str__(self) -> str:
         return self.__repr__()
 
-    del __typing
-    del __overload
+    del _typing
 
 
 # 完整的数字
@@ -241,36 +292,39 @@ class FullRationalNumber(object):
     比较运算 (```==``` 与 ```!=``` 除外) 会先尝试把数据转为 ```FullRationalNumber``` 在比较, 若无法转换, 则将 ```self``` 转为 ```float``` 后再尝试比较, 若还无法比较, 则引发 ```TypeError``` 报错
     """
 
-    import typing as __typing
-    from decimal import Decimal as __Decimal
-    from typing import overload as __overload
+    import typing as _typing
+    from decimal import Decimal as _Decimal
 
-    @__overload
+    __slots__: tuple[str, ...] = ("__numerator", "__denominator")
+
+    @_typing.overload
     def __init__(self) -> None:
         ...
 
-    @__overload
-    def __init__(self, numerator: __typing.Any, denominator: __typing.Any) -> None:
+    @_typing.overload
+    def __init__(self, numerator: _typing.Any, denominator: _typing.Any) -> None:
         ...
 
-    @__overload
-    def __init__(self, value: __typing.Any) -> None:
+    @_typing.overload
+    def __init__(self, value: _typing.Any) -> None:
         ...
 
-    def __init__(self, *args: __typing.Any) -> None:
+    def __init__(self, *args: _typing.Any) -> None:
         import decimal
 
-        from ._evaluate import evaluate
+        from ._evaluate import rational_evaluate
+
+        print(f"{decimal.getcontext().prec=}")
 
         if len(args) == 0:
             self.__numerator: decimal.Decimal = decimal.Decimal("0")
             self.__denominator: decimal.Decimal = decimal.Decimal("1")
             return
         elif len(args) == 1:
-            self.__numerator, self.__denominator = evaluate(args[0], "FullRationalNumber")
+            self.__numerator, self.__denominator = rational_evaluate(args[0], "FullRationalNumber")
         elif len(args) == 2:
-            self.__numerator, self.__denominator = evaluate(args[0], "FullRationalNumber")
-            result = evaluate(args[1], "FullRationalNumber")
+            self.__numerator, self.__denominator = rational_evaluate(args[0], "FullRationalNumber")
+            result = rational_evaluate(args[1], "FullRationalNumber")
             self.__denominator *= result[0]
             self.__numerator *= result[1]
             if self.__denominator == 0:
@@ -285,12 +339,12 @@ class FullRationalNumber(object):
 
         try:
             self.__numerator: decimal.Decimal = decimal.Decimal(str(self.__numerator)[:str(self.__numerator).index("."):])
-        except:
+        except Exception:
             pass
 
         try:
             self.__denominator: decimal.Decimal = decimal.Decimal(str(self.__denominator)[:str(self.__denominator).index("."):])
-        except:
+        except Exception:
             pass
 
         if min(abs(self.__numerator), abs(self.__denominator)) >= 2:
@@ -316,12 +370,12 @@ class FullRationalNumber(object):
 
             try:
                 self.__numerator: decimal.Decimal = decimal.Decimal(str(self.__numerator)[:str(self.__numerator).index("."):])
-            except:
+            except Exception:
                 pass
 
             try:
                 self.__denominator: decimal.Decimal = decimal.Decimal(str(self.__denominator)[:str(self.__denominator).index("."):])
-            except:
+            except Exception:
                 pass
 
             if min(abs(self.__numerator), abs(self.__denominator)) >= 2:
@@ -341,63 +395,63 @@ class FullRationalNumber(object):
         self.__denominator: decimal.Decimal = decimal.Decimal("1")
 
     @property
-    def numerator(self) -> __Decimal:
+    def numerator(self) -> _Decimal:
         return self.__numerator
 
     @property
-    def denominator(self) -> __Decimal:
+    def denominator(self) -> _Decimal:
         return self.__denominator
 
-    def __add__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __add__(self, other: _typing.Any) -> "FullRationalNumber":
         if isinstance(other, FullRationalNumber):
             return FullRationalNumber(self.__numerator * other.denominator + other.numerator * self.__denominator, self.__denominator * other.denominator)
         else:
             return self.__add__(FullRationalNumber(other))
 
-    def __radd__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __radd__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__add__(FullRationalNumber(other))
 
-    def __iadd__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __iadd__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__add__(FullRationalNumber(other))
 
-    def __sub__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __sub__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__add__(-FullRationalNumber(other))
 
-    def __rsub__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __rsub__(self, other: _typing.Any) -> "FullRationalNumber":
         return FullRationalNumber(other).__add__(-self)
 
-    def __isub__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __isub__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__sub__(FullRationalNumber(other))
 
-    def __mul__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __mul__(self, other: _typing.Any) -> "FullRationalNumber":
         if isinstance(other, FullRationalNumber):
             return FullRationalNumber(self.__numerator * other.numerator, self.__denominator * other.denominator)
         else:
             return self.__mul__(FullRationalNumber(other))
 
-    def __rmul__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __rmul__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__mul__(FullRationalNumber(other))
 
-    def __imul__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __imul__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__mul__(FullRationalNumber(other))
 
-    def __truediv__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __truediv__(self, other: _typing.Any) -> "FullRationalNumber":
         inverse: FullRationalNumber = FullRationalNumber(other)
         if inverse.numerator != 0:
             return self.__mul__(FullRationalNumber(inverse.denominator, inverse.numerator))
         else:
             raise ZeroDivisionError("division by zero")
 
-    def __rtruediv__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __rtruediv__(self, other: _typing.Any) -> "FullRationalNumber":
         if self.__numerator != 0:
             return FullRationalNumber(other).__mul__(FullRationalNumber(self.__denominator, self.__numerator))
         else:
             raise ZeroDivisionError("division by zero")
 
-    def __itruediv__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __itruediv__(self, other: _typing.Any) -> "FullRationalNumber":
         return self.__truediv__(FullRationalNumber(other))
 
-    def __pow__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __pow__(self, other: _typing.Any) -> "FullRationalNumber":
         FullRationalNumber_other: FullRationalNumber = FullRationalNumber(other)
         if FullRationalNumber_other.denominator == 1:
             if FullRationalNumber_other.numerator > 0:
@@ -415,7 +469,7 @@ class FullRationalNumber(object):
         else:
             raise TypeError(f"unsupported operand value for \'**\': {repr(self)} and {repr(other)} whose denominator isn't 1")
 
-    def __rpow__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __rpow__(self, other: _typing.Any) -> "FullRationalNumber":
         if self.denominator == 1:
             FullRationalNumber_other: FullRationalNumber = FullRationalNumber(other)
             if self.numerator > 0:
@@ -433,63 +487,63 @@ class FullRationalNumber(object):
         else:
             raise TypeError(f"unsupported operand value for \'**\': {repr(other)} and {repr(self)} whose denominator isn't 1")
 
-    def __ipow__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __ipow__(self, other: _typing.Any) -> "FullRationalNumber":
         FullRationalNumber_other: FullRationalNumber = FullRationalNumber(other)
         try:
             return self.__pow__(FullRationalNumber_other)
         except TypeError:
             raise TypeError(f"unsupported operand value for \'**=\': {repr(self)} and {repr(other)} whose denominator isn't 1")
 
-    def __lt__(self, other: __typing.Any) -> bool:
+    def __lt__(self, other: _typing.Any) -> bool:
         try:
             FullRationalNumber_other = FullRationalNumber(other)
             return (self.numerator * FullRationalNumber_other.denominator).__lt__(FullRationalNumber_other.numerator * self.denominator)
-        except:
+        except Exception:
             try:
                 return (self.__numerator * other.denominator).__lt__(other.numerator * self.__denominator)
-            except:
+            except Exception:
                 from .error import compare_error
                 compare_error(self, other, "<")
 
-    def __le__(self, other: __typing.Any) -> bool:
+    def __le__(self, other: _typing.Any) -> bool:
         try:
             return not self.__gt__(other)
-        except:
+        except Exception:
             from .error import compare_error
             compare_error(self, other, "<=")
 
-    def __eq__(self, other: __typing.Any) -> bool:
+    def __eq__(self, other: _typing.Any) -> bool:
         try:
             FullRationalNumber_other: FullRationalNumber = FullRationalNumber(other)
             return (self.__numerator * FullRationalNumber_other.denominator).__eq__(FullRationalNumber_other.numerator * self.__denominator)
-        except:
+        except Exception:
             try:
                 return (self.__numerator * other.denominator).__eq__(other.numerator * self.__denominator)
-            except:
+            except Exception:
                 return False
 
-    def __ne__(self, other: __typing.Any) -> bool:
+    def __ne__(self, other: _typing.Any) -> bool:
         try:
             FullRationalNumber_other: FullRationalNumber = FullRationalNumber(other)
             return (self.__numerator * FullRationalNumber_other.denominator).__ne__(FullRationalNumber_other.numerator * self.__denominator)
-        except:
+        except Exception:
             return True
 
-    def __gt__(self, other: __typing.Any) -> bool:
+    def __gt__(self, other: _typing.Any) -> bool:
         try:
             FullRationalNumber_other = FullRationalNumber(other)
             return (self.numerator * FullRationalNumber_other.denominator).__gt__(FullRationalNumber_other.numerator * self.denominator)
-        except:
+        except Exception:
             try:
                 return (self.__numerator * other.denominator).__gt__(other.numerator * self.__denominator)
-            except:
+            except Exception:
                 from .error import compare_error
                 compare_error(self, other, ">")
 
-    def __gt__(self, other: __typing.Any) -> bool:
+    def __gt__(self, other: _typing.Any) -> bool:
         try:
             return not self.__lt__(other)
-        except:
+        except Exception:
             from .error import compare_error
             compare_error(self, other, ">=")
 
@@ -509,7 +563,7 @@ class FullRationalNumber(object):
         return float(self.__numerator / self.__denominator)
 
     def __complex__(self) -> complex:
-        return complex(float(self.__numerator / self.__denominator))
+        return complex(self.__numerator / self.__denominator)
 
     def __bool__(self) -> bool:
         return not not self.__numerator
@@ -523,19 +577,23 @@ class FullRationalNumber(object):
     def __repr__(self) -> str:
         return f"FullRationalNumber(\'{self.__str__()}\')"
 
-    del __typing
-    del __Decimal
-    del __overload
+    del _typing
+    del _Decimal
 
 
 class FullRationalComplexNumber(object):
     '''
+    FullRationalComplexNumber
+    =========================
+
     完整的复数类
     '''
 
-    import typing as __typing
+    import typing as _typing
 
-    def __init__(self, real: __typing.Any = 0, imaginary: __typing.Any = 0) -> None:
+    __slots__: tuple[str, ...] = ("__real", "__imainary")
+
+    def __init__(self, real: _typing.Any = 0, imaginary: _typing.Any = 0) -> None:
         self.__real: FullRationalNumber = FullRationalNumber(real)
         self.__imainary: FullRationalNumber = FullRationalNumber(imaginary)
 
@@ -547,32 +605,101 @@ class FullRationalComplexNumber(object):
     def imainary(self) -> FullRationalNumber:
         return self.__imainary
 
-    def __add__(self, other: __typing.Any) -> "FullRationalComplexNumber":
-        return FullRationalComplexNumber(self.__real + other.real, self.__imainary + other.imainary) if isinstance(other, FullRationalComplexNumber) else self + FullRationalComplexNumber(other)
+    def __add__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return FullRationalComplexNumber(self.__real.__add__(other.real), self.__imainary.__add__(other.imainary)) if isinstance(other, FullRationalComplexNumber) else self.__add__(FullRationalComplexNumber(other))
 
-    def __iadd__(self, other: __typing.Any) -> "FullRationalNumber":
+    def __radd__(self, other: _typing.Any) -> "FullRationalComplexNumber":
         return self.__add__(other)
 
-    del __typing
+    def __iadd__(self, other: _typing.Any) -> "FullRationalNumber":
+        return self.__add__(other)
+
+    def __sub__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return self.__add__(FullRationalComplexNumber(other).__neg__())
+
+    def __rsub__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return self.__sub__(other).__neg__()
+
+    def __isub__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return self.__sub__(other)
+
+    def __mul__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return FullRationalComplexNumber(
+            self.__real.__mul__(other.real).__sub__(self.__imainary.__mul__(other.imainary)),
+            self.__real.__mul__(other.imainary).__add__(self.__imainary.__mul__(other.real)),
+        ) if isinstance(other, FullRationalComplexNumber) else self.__mul__(FullRationalComplexNumber(other))
+
+    def __rmul__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return self.__mul__(other)
+
+    def __imul__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return self.__mul__(other)
+
+    def __truediv__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return FullRationalComplexNumber(
+            (self.__real.__mul__(other.real).__add__(self.__imainary.__mul__(other.imainary))).__truediv__(other.real.__mul__(other.real).__add__(other.imainary.__mul__(other.imainary))),
+            (self.__imainary.__mul__(other.real).__sub__(self.__real.__mul__(other.imainary))).__truediv__(other.real.__mul__(other.real).__add__(other.imainary.__mul__(other.imainary))),
+        ) if isinstance(other, FullRationalComplexNumber) else self.__truediv__(FullRationalComplexNumber(other))
+
+    def __rtruediv__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return FullRationalComplexNumber(1).__truediv__(self.__truediv__(other))
+
+    def __itruediv__(self, other: _typing.Any) -> "FullRationalComplexNumber":
+        return self.__truediv__(other)
+
+    def __eq__(self, other: _typing.Any) -> bool:
+        try:
+            return self.__real.__eq__((FullRationalComplexNumber_other := FullRationalComplexNumber(other)).real) and self.__imainary.__eq__(FullRationalComplexNumber_other.imainary)
+        except Exception:
+            return False
+
+    def __ne__(self, other: _typing.Any) -> bool:
+        return not self.__eq__(other)
+
+    def __bool__(self) -> bool:
+        return self.__real.__bool__() or self.__imainary.__bool__()
+
+    def __complex__(self) -> complex:
+        return complex(self.__real, self.__imainary)
+
+    def __str__(self) -> str:
+        return f"{self.__real}+{self.__imainary}i" if self.__imainary.denominator == 1 else f"{self.__real}+{self.__imainary.numerator}j/{self.__imainary.denominator}"
+
+    def __repr__(self) -> str:
+        return f"FullRationalComplexNumber({self.__str__()})"
+
+    def __pos__(self) -> "FullRationalComplexNumber":
+        return self
+
+    def __neg__(self) -> "FullRationalComplexNumber":
+        return FullRationalComplexNumber(self.__real.__neg__, self.__imainary.__neg__)
+
+    def __abs__(self) -> float:
+        return self.__complex__().__abs__()
+
+    del _typing
 
 
-class FullThread(__threading.Thread):
+class FullThread(_Thread):
     '''
+    FullThread
+    ==========
+
     更完整的多线程类
 
     添加了 `__call__` 和 ```stop``` 方法
     '''
 
-    import typing as __typing
+    import typing as _typing
 
     def __init__(
         self,
         group: None = None,
-        target: __typing.Callable[..., object] | None = None,
-        name: __typing.Optional[str] = None,
-        args: __typing.Iterable = (),
-        kwargs: __typing.Mapping[str, __typing.Any] | None = {},
-        daemon: __typing.Optional[bool] = None,
+        target: _typing.Callable[..., object] | None = None,
+        name: str | None = None,
+        args: _typing.Iterable = (),
+        kwargs: _typing.Mapping[str, _typing.Any] = {},
+        daemon: bool | None = None,
     ) -> None:
         super().__init__(group, target, name, args, kwargs, daemon=daemon)
 
@@ -581,11 +708,81 @@ class FullThread(__threading.Thread):
 
     def stop(self) -> None:
         from ctypes import c_long, py_object, pythonapi
-        print("stop start")
         pythonapi.PyThreadState_SetAsyncExc(c_long(self.ident), py_object(SystemExit))
-        print("stop stop")
 
-    del __typing
+    del _typing
 
 
-del __threading
+class FullVersion(object):
+    '''
+    FullVersion
+    ===========
+
+    完整的版本类
+    '''
+
+    import typing as _typing
+
+    __slots__: tuple[str, ...] = ("__major", "__minor", "__micro", "__releaselevel", "__serial")
+
+    def __init__(self) -> None:
+        import sys
+        self.__major: int = sys.version_info.major
+        self.__minor: int = sys.version_info.minor
+        self.__micro: int = sys.version_info.micro
+        self.__releaselevel: str = sys.version_info.releaselevel
+        self.__serial: int = sys.version_info.serial
+
+    @property
+    def major(self) -> int:
+        return self.__major
+
+    @property
+    def minor(self) -> int:
+        return self.__minor
+
+    @property
+    def micro(self) -> int:
+        return self.__micro
+
+    @property
+    def releaselevel(self) -> str:
+        return self.__releaselevel
+
+    @property
+    def serial(self) -> int:
+        return self.__serial
+
+    def __lt__(self, other: _typing.Iterable[int]) -> bool:
+        return (self.__major, self.__minor, self.__micro).__lt__(tuple(other))
+
+    def __le__(self, other: _typing.Iterable[int]) -> bool:
+        return (self.__major, self.__minor, self.__micro).__le__(tuple(other))
+
+    def __eq__(self, other: _typing.Iterable[int]) -> bool:
+        return (self.__major, self.__minor, self.__micro).__eq__(tuple(other))
+
+    def __ne__(self, other: _typing.Iterable[int]) -> bool:
+        return (self.__major, self.__minor, self.__micro).__ne__(tuple(other))
+
+    def __gt__(self, other: _typing.Iterable[int]) -> bool:
+        return (self.__major, self.__minor, self.__micro).__gt__(tuple(other))
+
+    def __ge__(self, other: _typing.Iterable[int]) -> bool:
+        return (self.__major, self.__minor, self.__micro).__ge__(tuple(other))
+
+    def __iter__(self) -> _typing.Iterator[int]:
+        return (self.__major, self.__minor, self.__micro).__iter__()
+
+    def __str__(self) -> str:
+        import sys
+        return sys.version
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    del _typing
+
+
+del _Thread
+del _getcontext

@@ -6,7 +6,7 @@ from .FullFunction import *
 from .game import *
 from .he import HE
 from .languages import *
-from .math import *
+from .mathematics import *
 from .remove import *
 from .start import *
 from .vector import *

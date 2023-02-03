@@ -7,7 +7,7 @@ from typing import Any, cast
 
 try:
     from rich import print
-except:
+except Exception:
     pass
 
 __all__ = ("HE", )

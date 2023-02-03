@@ -57,14 +57,14 @@ class Enigma(object):
                 RotationNumber: str = item["RotationNumber"]
                 try:
                     LAST: Rotor = self.rotor[index - 1]
-                except:
+                except Exception:
                     LAST: None = None
                 self.rotor.append(Rotor(PasswordTable, RotationNumber, LAST))
             if item["type"] == "Reflector":
                 PasswordTable = item["PasswordTable"]
                 try:
                     LAST: Reflector = self.rotor[index - 1]
-                except:
+                except Exception:
                     LAST: None = None
                 self.rotor.append(Reflector(PasswordTable, LAST))
         for index, item in enumerate(self.rotor):

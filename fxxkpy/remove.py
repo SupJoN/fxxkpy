@@ -13,7 +13,7 @@ def warning_remove(file: str, isself: bool = False) -> None:
                 executing: bool = True
             else:
                 executing: bool = False
-        except:
+        except Exception:
             executing: bool = False
         if executing:
             os.remove(file)

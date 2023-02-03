@@ -1,17 +1,17 @@
 #coding:utf-8
 """帮助初学者写 Hello world!"""
 
-import ctypes as __ctypes
-import os as __os
-import platform as __platform
-import typing as __typing
+import ctypes as _ctypes
+import os as _os
+import platform as _platform
+import typing as _typing
 
 __all__: list[str] = ["hello_world"]
 
-if __os.name == "nt" and __platform.machine() == "AMD64":
+if _os.name == "nt" and _platform.machine() == "AMD64":
     hello_world = getattr(
-        __ctypes.WinDLL(__os.path.join(
-            __os.path.split(__os.path.abspath(__file__))[0],
+        _ctypes.WinDLL(_os.path.join(
+            _os.path.split(_os.path.abspath(__file__))[0],
             "dll",
             "fxxkpy-dll.dll",
         )),
@@ -20,7 +20,7 @@ if __os.name == "nt" and __platform.machine() == "AMD64":
 else:
     hello_world = lambda: print("hello_world")
 
-hello_world: __typing.Callable[[], None]
+hello_world: _typing.Callable[[], None]
 hello_world()
 
-del __ctypes, __os, __platform, __typing
+del _ctypes, _os, _platform, _typing

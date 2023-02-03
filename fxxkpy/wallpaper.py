@@ -2,39 +2,41 @@
 # 动态壁纸
 class Dynamic(object):
     '''
-    Windows下的动态壁纸类
+    Windows 下的动态壁纸类
 
-    只有x86架构的64位Windows可以运行, 其他系统会报错
+    只有 x86 架构的 64 位 Windows 可以运行, 其他系统会报错
 
-    self.start 方法开始显示壁纸
+    `self.start` 方法开始显示壁纸
 
     属性:
-        video: 视频绝对路径
-        player: ffplay 播放器的绝对路径, $default 为 \\wallpaper\\ffplay 下的 ffplay.exe
-        command: 运行参数, $default 为默认参数, 如果改变了参数, 可以用 $video 代替视频绝对路径
-        SetDpi: 改变缩放设置需要用的程序
-        userdpi: self.__getdpi 函数获取到的 dpi
-        display_thread: 显示线程
+        `video`: 视频绝对路径
+        `player`: `ffplay` 播放器的绝对路径, `$default` 为 `\\wallpaper\\ffplay` 下的 `ffplay.exe`
+        `command`: 运行参数, `$default` 为默认参数, 如果改变了参数, 可以用 `$video` 代替视频绝对路径
+        `daemon`: `display_thread` 的 `daemon` 属性
+        `SetDpi`: 改变缩放设置需要用的程序
+        `userdpi`: `self.__getdpi` 函数获取到的 dpi
+        `display_thread`: 显示线程
 
     注意:
         程序运作是可能会改变缩放率, 忽略即可, 程序运行要十秒左右的时间, 最好啥都不干
     '''
-    def __init__(self, video: str, player: str = "$default", command: str = "$default") -> None:
+    def __init__(self, video: str, player: str = "$default", command: str = "$default", daemon: bool = True) -> None:
         import os
         import platform
         import threading
 
         if isinstance(video, str) and isinstance(player, str) and isinstance(command, str):
-            if (system := platform.system()) == "Windows" and (machine := platform.machine()) == "AMD64":
+            if platform.system() == "Windows" and platform.machine() == "AMD64":
                 path: str = os.path.split(os.path.abspath(__file__))[0]
                 self.video: str = video
                 self.player: str = player if player != "$default" else f"{path}\\wallpaper\\ffplay\\ffplay.exe"
                 self.command: str = command if command != "$default" else f"$video -noborder -fs -loop 0 -loglevel quiet"
+                self.daemon: bool = daemon
                 self.SetDpi: str = f"{path}\\wallpaper\\SetDpi.exe"
                 self.userdpi: float = self.__getdpi()
                 self.display_thread: threading.Thread | None = None
             else:
-                raise Exception(f"CompatibilityError: {system} is not compatible with {machine}")
+                raise Exception(f"CompatibilityError: {platform.system()} is not compatible with {platform.machine()}")
         else:
             raise TypeError("only str is supported")
 
@@ -113,7 +115,7 @@ class Dynamic(object):
     def start(self) -> None:
         from threading import Thread
         from time import sleep
-        self.display_thread: Thread = Thread(target=self.__display)
+        self.display_thread: Thread = Thread(target=self.__display, daemon=self.daemon)
         if self.__change():
             sleep(0.5)
             self.display_thread.start()
@@ -121,6 +123,10 @@ class Dynamic(object):
             self.__back()
         else:
             self.display_thread.start()
+
+    # 存在
+    def alive(self) -> bool:
+        return self.display_thread.is_alive()
 
     # __call__ 函数
     def __call__(self) -> None:

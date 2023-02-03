@@ -24,7 +24,7 @@
             font-size: 25px;
         }
 
-        .centerdiv {
+        .center-div {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -34,9 +34,14 @@
 </head>
 
 <body>
-    <div class="centerdiv">
-        <div class=" center">您已完成编辑</div>
+    <div class="center-div">
+        <div class="center">您已完成编辑</div>
     </div>
+    <iframe width="0" height="0" src="/apply" id="stop"></iframe>
+    <script>
+        setTimeout(function () { document.getElementById('stop').contentWindow.location.reload(); }, 1);
+        setTimeout(function () { document.getElementById("stop").remove(); }, 1);
+    </script>
 </body>
 
 </html>

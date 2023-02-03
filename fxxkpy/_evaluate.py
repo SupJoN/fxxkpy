@@ -3,24 +3,26 @@ import decimal
 import fractions
 
 from .FullBaseObject import *
-from .math import isFloat
+from .mathematics import isFloat
 
 try:
     import fraction
     isFraction = True
-except:
+except Exception:
     isFraction = False
 try:
     import sympy
     isSympy = True
-except:
+except Exception:
     isSympy = False
 
-evaluate_type = int | float | str | FullRationalNumber | decimal.Decimal | fractions.Fraction | fraction.Fraction | sympy.core.numbers.Zero | sympy.core.numbers.One | sympy.core.numbers.Integer | sympy.core.numbers.Float
+rational_evaluate_type = int | float | str | FullRationalNumber | decimal.Decimal | fractions.Fraction | fraction.Fraction | sympy.core.numbers.Zero | sympy.core.numbers.One | sympy.core.numbers.Integer | sympy.core.numbers.Float
+
+complex_evaluate_type = int | float | complex | str | FullRationalNumber | FullRationalComplexNumber | decimal.Decimal | fractions.Fraction | fraction.Fraction | sympy.core.numbers.Zero | sympy.core.numbers.One | sympy.core.numbers.Integer | sympy.core.numbers.Float
 
 
-def evaluate(parameter: evaluate_type, name: str) -> tuple[decimal.Decimal, decimal.Decimal]:
-    def str_evaluate(parameter: str) -> tuple[decimal.Decimal] | None:
+def rational_evaluate(parameter: rational_evaluate_type, name: str) -> tuple[decimal.Decimal, decimal.Decimal]:
+    def str_evaluate(parameter: str) -> tuple[decimal.Decimal, decimal.Decimal] | None:
         line: int = parameter.find("/")
         if line == -1:
             if isFloat(parameter):
@@ -45,8 +47,7 @@ def evaluate(parameter: evaluate_type, name: str) -> tuple[decimal.Decimal, deci
         denominator: decimal.Decimal = decimal.Decimal(1)
         isChanged: bool = True
     elif isinstance(parameter, str):
-        result: tuple[decimal.Decimal] | None = str_evaluate(parameter)
-        if result:
+        if (result := str_evaluate(parameter)):
             numerator: decimal.Decimal = result[0]
             denominator: decimal.Decimal = result[1]
             if denominator == 0:
@@ -93,7 +94,7 @@ def evaluate(parameter: evaluate_type, name: str) -> tuple[decimal.Decimal, deci
             numerator: decimal.Decimal = decimal.Decimal(str(parameter.numerator))
             denominator: decimal.Decimal = decimal.Decimal(str(parameter.denominator))
             isChanged: bool = True
-        except:
+        except Exception:
             pass
     if not isChanged:
         try:
@@ -102,7 +103,7 @@ def evaluate(parameter: evaluate_type, name: str) -> tuple[decimal.Decimal, deci
                 numerator: decimal.Decimal = decimal.Decimal(str(int_parameter))
                 denominator: decimal.Decimal = decimal.Decimal("1")
                 isChanged: bool = True
-        except:
+        except Exception:
             pass
     if not isChanged:
         try:
@@ -111,7 +112,7 @@ def evaluate(parameter: evaluate_type, name: str) -> tuple[decimal.Decimal, deci
                 numerator: decimal.Decimal = decimal.Decimal(str(int_parameter))
                 denominator: decimal.Decimal = decimal.Decimal("1")
                 isChanged = True
-        except:
+        except Exception:
             pass
     if not isChanged:
         try:
@@ -120,17 +121,29 @@ def evaluate(parameter: evaluate_type, name: str) -> tuple[decimal.Decimal, deci
                 numerator: decimal.Decimal = result[0]
                 denominator: decimal.Decimal = result[1]
                 isChanged: bool = denominator != 0
-        except:
+        except Exception:
             pass
     if not isChanged:
         try:
-            result: tuple[decimal.Decimal] | None = str_evaluate(repr(parameter))
+            result: tuple[decimal.Decimal, decimal.Decimal] | None = str_evaluate(repr(parameter))
             if result:
                 numerator: decimal.Decimal = result[0]
                 denominator: decimal.Decimal = result[1]
                 isChanged: bool = denominator != 0
-        except:
+        except Exception:
             pass
     if not isChanged:
         raise TypeError(f"{name} doesn't accept arguments of {str(parameter.__class__)[7:len(str(parameter.__class__)) - 1]} when it's initialized")
     return numerator, denominator
+
+
+def complex_evaluate(parameter: complex_evaluate_type, name: str, i: bool = True, j: bool = True) -> tuple[FullRationalNumber, FullRationalNumber]:
+    def str_evaluate(parameter: str) -> tuple[FullRationalNumber, FullRationalNumber] | None:
+        if (parameter.count("j") > 1 if j else parameter.find("j") != -1) or (parameter.count("i") > 1 if i else parameter.find("i") != -1):
+            raise ValueError(f"cannot be evaluated: {repr(parameter)}")
+        else:
+            ...
+
+    isChanged: bool = False
+    if isinstance(parameter, str):
+        ...

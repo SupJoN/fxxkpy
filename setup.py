@@ -23,16 +23,15 @@ VERSION = ver
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    "bottle",
     "colorama",
     "pygame",
-    "pywin32",
 ]
 
 # What packages are optional?
 EXTRAS = {
     "more support": ["fraction", "sympy"],
     "look better": ["rich"],
+    "wallpaper": ["pywin32"],
 }
 
 # The rest you shouldn"t have to touch too much :)

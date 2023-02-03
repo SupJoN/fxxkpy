@@ -1,9 +1,27 @@
 # coding:utf-8
-from typing import Any as __Any
-from sys import modules as __modules
+from typing import Any as _Any
 
 # 无穷大
 inf: float = float("inf")
+
+
+# 随机数
+def random() -> float:
+    '''
+    随机数
+
+    速度 150000 ns
+
+    范围 [0, 1)
+    '''
+    from os import listdir, cpu_count
+    from random import _inst
+    from sys import hexversion, modules
+    from tempfile import gettempdir
+    from time import time
+
+    _inst.seed((hexversion * _inst.random() + len(listdir(gettempdir())) + len(modules) * _inst.random()) ** _inst.random() + (cpu_count() or _inst.random()))
+    return _inst.random() * time() % 1
 
 
 # 分解质因数
@@ -24,7 +42,7 @@ def PrimeFactorization(number: int) -> dict:
     if isinstance(number, (int, float, str, Decimal)):
         try:
             Decimal_number: Decimal = Decimal(str(number))
-        except:
+        except Exception:
             raise ValueError(f"cannot be parsed: {repr(number)}")
         if Decimal_number % 1 == 0:
             if Decimal_number >= 2:
@@ -32,7 +50,7 @@ def PrimeFactorization(number: int) -> dict:
                 while Decimal_number & 1 == 0:
                     try:
                         result[2] += 1
-                    except:
+                    except Exception:
                         result[2] = 1
                     Decimal_number //= 2
                 for i in range(3, 2 * Decimal_number + 3, 2):
@@ -41,7 +59,7 @@ def PrimeFactorization(number: int) -> dict:
                     while Decimal_number % i == 0:
                         try:
                             result[i] += 1
-                        except:
+                        except Exception:
                             result[i] = 1
                         Decimal_number //= i
                 return result
@@ -103,7 +121,7 @@ def LCM(num1: int, num2: int, sort: bool = False) -> int:
 
 
 # 快速排序
-def quickly(data: list, parameter: __Any = None) -> list:
+def quickly(data: list, parameter: _Any = None) -> list:
     '''
     列表的快速排序函数
 
@@ -114,7 +132,7 @@ def quickly(data: list, parameter: __Any = None) -> list:
         parameter: 默认为 None ，代表参数，为 None 时默认没有参数
     '''
     if parameter == None:
-        original: list = [] + data  # 不改变原数据
+        original: list = data[::]  # 不改变原数据
         if len(original) > 1:
             standard = original[0]
             del original[0]
@@ -128,7 +146,7 @@ def quickly(data: list, parameter: __Any = None) -> list:
         else:
             return original
     else:
-        original = [] + data  # 不改变原数据
+        original = data[::]  # 不改变原数据
         if len(original) > 1:
             standard = original[0]
             del original[0]
@@ -162,7 +180,7 @@ try:
     # 斐波那契数列
     def fibonacci_sequence(index: int) -> __sympy.core.Integer:
         return __sympy.core.Integer(__sympy.S(f"1 / (5 ** 0.5) * (((1 + 5 ** 0.5) / 2) ** {index} - ((1 - 5 ** 0.5) / 2) ** {index})"))
-except:
+except Exception:
     import decimal as __decimal
 
     # 斐波那契数列
@@ -213,4 +231,4 @@ def isFloat(value: str) -> bool:
         return False
 
 
-del __Any
+del _Any

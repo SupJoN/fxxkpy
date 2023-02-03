@@ -11,12 +11,14 @@
             margin: 0;
         }
 
-        html,
-        body {
-            height: 100%;
+        a {
+            color: black;
         }
 
+        html,
         body {
+            height: max(100%, 500px);
+            width: max(100%, 700px);
             background-color: rgba(223, 223, 255, 0.39);
             display: flex;
             justify-content: center;
@@ -177,10 +179,10 @@
         <div class="text-container container-item">
             <div class="code">404</div>
             <div class="msg">你查看的页面貌似丢失了呢...</div>
-            <a href="/index" style="color: black">
+            <a href="/index">
                 <div class="action">返回编辑界面</div>
             </a>
-            <a href="/game" style="color: black">
+            <a href="/game">
                 <div class="action">小游戏</div>
             </a>
         </div>
